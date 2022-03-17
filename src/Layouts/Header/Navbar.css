@@ -57,7 +57,7 @@ header nav .left {
 }
 
 header nav .left input {
-    width: 600px;
+    width: 500px;
     height: 40px;
     border: none;
     outline: none;
@@ -93,6 +93,10 @@ header nav .right {
     align-items: center;
     /* border: 2px solid red; */
     flex: .3;
+}
+
+header nav .right .nav_btn{
+    font-size: small !important;
 }
 
 header nav .right a {
@@ -159,7 +163,7 @@ header nav .right .cart_count {
 header nav .right .cart_text {
     color: #fff;
     font-weight: 700;
-    font-size: 16px;
+    font-size: small;
     margin-top: 1rem;
 }
 

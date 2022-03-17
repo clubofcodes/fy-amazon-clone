@@ -1,4 +1,4 @@
-.home_section{
+.home_section {
     width: 100%;
     position: relative;
     top: 60px;
@@ -8,20 +8,33 @@
     margin-bottom: 10px;
 }
 
-.category_card{
+.category_card {
     z-index: 1;
-    margin: 0 0.2rem;
+    margin: 0 0.5rem;
     padding: 0 5px !important;
-    max-width: 295px;
 }
 
-.card-body a, .card-body p{
+.card-body a, .card-body p {
     font-size: 12px !important;
     text-decoration: none;
 }
-.card-body a:hover{
+
+.card-body a:hover {
     text-decoration: underline;
 }
-.card-body h5{
+
+.card-body h5 {
     font-weight: 700;
+}
+
+@media only screen and (min-width: 1220px) {
+    .category_card {
+        width: 380px !important;
+    }
+}
+
+@media only screen and (min-width: 1525px) {
+    .category_card {
+        width: 350px !important;
+    }
 }
