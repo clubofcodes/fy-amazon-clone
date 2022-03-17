@@ -10,9 +10,9 @@
 
 .category_card{
     z-index: 1;
-    margin: 0 0.75rem;
+    margin: 0 0.2rem;
     padding: 0 5px !important;
-    max-width: 350px;
+    max-width: 295px;
 }
 
 .card-body a, .card-body p{
@@ -21,4 +21,7 @@
 }
 .card-body a:hover{
     text-decoration: underline;
+}
+.card-body h5{
+    font-weight: 700;
 }

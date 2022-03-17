@@ -23,10 +23,10 @@ export const HomeMainComp = () => {
             <div className="banner_part">
                 <Banner />
             </div>
-            <div className="row mx-0 justify-content-center">
+            <div className="row mx-0 justify-content-evenly">
                 <div className="col-sm-3 category_card card my-2">
                     <div className="card-body">
-                        <h4 className="">Professional tools, testing &amp; more</h4>
+                        <h5 className="">Professional tools, testing &amp; more</h5>
                         <div className="row my-3">
                             {cardBodyList.map((data, i) => (
                                 (i < 4) && <div className="col-sm-6" key={i}>
@@ -40,7 +40,7 @@ export const HomeMainComp = () => {
                 </div>
                 <div className="col-sm-3 category_card card my-2">
                     <div className="card-body">
-                        <h4 className="">Amazon Pay | Book your travel tickets</h4>
+                        <h5 className="">Amazon Pay | Book your travel tickets</h5>
                         <div className="row my-3">
                             {cardBodyList.map((data, i) => (
                                 (i >= 4 && i <= 7) && <div className="col-sm-6" key={i}>
@@ -54,7 +54,7 @@ export const HomeMainComp = () => {
                 </div>
                 <div className="col-sm-3 category_card card my-2">
                     <div className="card-body">
-                        <h4 className="">Automotive essentials | Up to 60% off</h4>
+                        <h5 className="">Automotive essentials | Up to 60% off</h5>
                         <div className="row my-3">
                             {cardBodyList.map((data, i) => (
                                 (i > 7) && <div className="col-sm-6" key={i}>
@@ -68,7 +68,7 @@ export const HomeMainComp = () => {
                 </div>
                 <div className="col-sm-3 category_card card my-2">
                     <div className="card-body">
-                        <h4 className="">Pay your credit card bills on Amazon</h4>
+                        <h5 className="">Pay your credit card bills on Amazon</h5>
                         <div className="card my-3">
                             <div className="card-body p-0">
                                 <img className="w-100" src="https://images-eu.ssl-images-amazon.com/images/G/31/img19/AmazonPay/Boson/Sid/CCBP/DesktopGateway_CategoryCard_379x304_CCBP._SY304_CB413372299_.jpg" alt="" />
@@ -79,7 +79,7 @@ export const HomeMainComp = () => {
                 </div>
                 <div className="col-sm-3 category_card card my-2">
                     <div className="card-body">
-                        <h4 className="">Professional tools, testing &amp; more</h4>
+                        <h5 className="">Professional tools, testing &amp; more</h5>
                         <div className="row my-3">
                             {cardBodyList.map((data, i) => (
                                 (i < 4) && <div className="col-sm-6" key={i}>
@@ -93,7 +93,7 @@ export const HomeMainComp = () => {
                 </div>
                 <div className="col-sm-3 category_card card my-2">
                     <div className="card-body">
-                        <h4 className="">Amazon Pay | Book your travel tickets</h4>
+                        <h5 className="">Amazon Pay | Book your travel tickets</h5>
                         <div className="row my-3">
                             {cardBodyList.map((data, i) => (
                                 (i >= 4 && i <= 7) && <div className="col-sm-6" key={i}>
@@ -107,7 +107,7 @@ export const HomeMainComp = () => {
                 </div>
                 <div className="col-sm-3 category_card card my-2">
                     <div className="card-body">
-                        <h4 className="">Automotive essentials | Up to 60% off</h4>
+                        <h5 className="">Automotive essentials | Up to 60% off</h5>
                         <div className="row my-3">
                             {cardBodyList.map((data, i) => (
                                 (i > 7) && <div className="col-sm-6" key={i}>
@@ -121,7 +121,7 @@ export const HomeMainComp = () => {
                 </div>
                 <div className="col-sm-3 category_card card my-2">
                     <div className="card-body">
-                        <h4 className="">Pay your credit card bills on Amazon</h4>
+                        <h5 className="">Pay your credit card bills on Amazon</h5>
                         <div className="card my-3">
                             <div className="card-body p-0">
                                 <img className="w-100" src="https://images-eu.ssl-images-amazon.com/images/G/31/img19/AmazonPay/Boson/Sid/CCBP/DesktopGateway_CategoryCard_379x304_CCBP._SY304_CB413372299_.jpg" alt="" />
