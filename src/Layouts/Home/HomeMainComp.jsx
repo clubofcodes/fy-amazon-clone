@@ -24,7 +24,7 @@ export const HomeMainComp = () => {
                 <Banner />
             </div>
             <div className="row mx-0 justify-content-evenly">
-                <div className="col-sm-3 category_card card my-2">
+                <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
                         <h5 className="">Professional tools, testing &amp; more</h5>
                         <div className="row my-3">
@@ -38,7 +38,7 @@ export const HomeMainComp = () => {
                         <a href="https://www.amazon.in/b?node=12414705031&pf_rd_r=X4VGXBDAT5WMBM2S0TJJ&pf_rd_p=47d02811-c3b6-4046-96fa-b28a4288a4a7&pd_rd_r=e4da1f29-b11a-4ed8-a666-e2a64a0c6b0a&pd_rd_w=kY1oA&pd_rd_wg=fBWlZ&ref_=pd_gw_unk">Explore All</a>
                     </div>
                 </div>
-                <div className="col-sm-3 category_card card my-2">
+                <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
                         <h5 className="">Amazon Pay | Book your travel tickets</h5>
                         <div className="row my-3">
@@ -52,7 +52,7 @@ export const HomeMainComp = () => {
                         <a href="https://www.amazon.in/gp/sva/dashboard?ref_=gw_apay_acko_qcpc&pf_rd_r=HBY2EQGFPMK9DF32T0N5&pf_rd_p=dec4af99-e62d-4c85-8275-9e13a6c47b32&pd_rd_r=ba8653dc-649a-4d2c-89f5-322119aacc44&pd_rd_w=INHX3&pd_rd_wg=qICUT">Explore more from amazon pay</a>
                     </div>
                 </div>
-                <div className="col-sm-3 category_card card my-2">
+                <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
                         <h5 className="">Automotive essentials | Up to 60% off</h5>
                         <div className="row my-3">
@@ -66,7 +66,7 @@ export const HomeMainComp = () => {
                         <a href="https://www.amazon.in/b?ie=UTF8&node=4772060031&pf_rd_r=HBY2EQGFPMK9DF32T0N5&pf_rd_p=9ff36f11-82d6-4600-a8fb-e52bb32e171c&pd_rd_r=ba8653dc-649a-4d2c-89f5-322119aacc44&pd_rd_w=VGvYN&pd_rd_wg=qICUT&ref_=pd_gw_unk">See more</a>
                     </div>
                 </div>
-                <div className="col-sm-3 category_card card my-2">
+                <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
                         <h5 className="">Pay your credit card bills on Amazon</h5>
                         <div className="card my-3">
@@ -77,7 +77,7 @@ export const HomeMainComp = () => {
                         <a href="#">Pay Now</a>
                     </div>
                 </div>
-                <div className="col-sm-3 category_card card my-2">
+                <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
                         <h5 className="">Professional tools, testing &amp; more</h5>
                         <div className="row my-3">
@@ -91,7 +91,7 @@ export const HomeMainComp = () => {
                         <a href="https://www.amazon.in/b?node=12414705031&pf_rd_r=X4VGXBDAT5WMBM2S0TJJ&pf_rd_p=47d02811-c3b6-4046-96fa-b28a4288a4a7&pd_rd_r=e4da1f29-b11a-4ed8-a666-e2a64a0c6b0a&pd_rd_w=kY1oA&pd_rd_wg=fBWlZ&ref_=pd_gw_unk">Explore All</a>
                     </div>
                 </div>
-                <div className="col-sm-3 category_card card my-2">
+                <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
                         <h5 className="">Amazon Pay | Book your travel tickets</h5>
                         <div className="row my-3">
@@ -105,7 +105,7 @@ export const HomeMainComp = () => {
                         <a href="https://www.amazon.in/gp/sva/dashboard?ref_=gw_apay_acko_qcpc&pf_rd_r=HBY2EQGFPMK9DF32T0N5&pf_rd_p=dec4af99-e62d-4c85-8275-9e13a6c47b32&pd_rd_r=ba8653dc-649a-4d2c-89f5-322119aacc44&pd_rd_w=INHX3&pd_rd_wg=qICUT">Explore more from amazon pay</a>
                     </div>
                 </div>
-                <div className="col-sm-3 category_card card my-2">
+                <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
                         <h5 className="">Automotive essentials | Up to 60% off</h5>
                         <div className="row my-3">
@@ -119,7 +119,7 @@ export const HomeMainComp = () => {
                         <a href="https://www.amazon.in/b?ie=UTF8&node=4772060031&pf_rd_r=HBY2EQGFPMK9DF32T0N5&pf_rd_p=9ff36f11-82d6-4600-a8fb-e52bb32e171c&pd_rd_r=ba8653dc-649a-4d2c-89f5-322119aacc44&pd_rd_w=VGvYN&pd_rd_wg=qICUT&ref_=pd_gw_unk">See more</a>
                     </div>
                 </div>
-                <div className="col-sm-3 category_card card my-2">
+                <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
                         <h5 className="">Pay your credit card bills on Amazon</h5>
                         <div className="card my-3">

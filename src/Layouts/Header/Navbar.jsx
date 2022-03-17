@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useEffect, useRef } from 'react';
 import { resizeSelect } from '../../Utils/SelectResizer';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -28,7 +29,7 @@ const Navbar = () => {
             <nav>
                 <div className="left">
                     <div className="navlogo">
-                        <img src="./Assets/img/amazon_PNG25.png" alt="" />
+                        <NavLink to="/"><img src="./Assets/img/amazon_PNG25.png" alt="" /></NavLink>
                     </div>
                     <div className="nav_searchbaar">
                         <select

@@ -1,35 +1,49 @@
 .banner_img {
-    width: 100vw;
-    height: 100vh;
-    -webkit-mask-image: linear-gradient(180deg, black, transparent);
-    z-index: -1;
-    margin-bottom: -200px;
+  width: 100vw;
+  height: 100vh;
+  -webkit-mask-image: linear-gradient(180deg, black, transparent);
+  z-index: -1;
 }
 
 .carasousel {
-    margin-top: 10;
+  margin-top: 10;
 }
 
-.banner_part .css-ohwg9z{
-    margin-bottom: -200px;
-}
-
-.banner_part .css-hn784z, .css-1abc02a {
-    height: 30% !important;
+.banner_part .css-hn784z,
+.css-1abc02a {
+  height: 50% !important;
 }
 
 .banner_part .css-i4bv87-MuiSvgIcon-root {
-    font-size: 6rem !important;
-    margin-left: -30px !important;
+  font-size: 6rem !important;
+  margin-left: -30px !important;
 }
 
-.banner_part .css-1abc02a .MuiSvgIcon-root{
-    margin-right: -30px !important;
+.banner_part .css-1abc02a .MuiSvgIcon-root {
+  margin-right: -30px !important;
 }
 
-@media (max-width:768px) {
-    .banner_img {
-        object-fit: cover;
-        height: 180px;
-    }
+@media (max-width: 768px) {
+  .banner_img {
+    object-fit: cover;
+    height: 180px;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .banner_img {
+    margin-bottom: -220px !important;
+  }
+  .banner_part .css-ohwg9z {
+    margin-bottom: -220px !important;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .banner_img {
+    margin-bottom: -240px !important;
+  }
+  .banner_part .css-ohwg9z {
+    margin-bottom: -240px !important;
+  }
 }
