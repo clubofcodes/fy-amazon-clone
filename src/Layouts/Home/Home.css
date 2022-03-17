@@ -7,3 +7,18 @@
     border-bottom: 2px solid rgb(199, 199, 199);
     margin-bottom: 10px;
 }
+
+.category_card{
+    z-index: 1;
+    margin: 0 0.75rem;
+    padding: 0 5px !important;
+    max-width: 350px;
+}
+
+.card-body a, .card-body p{
+    font-size: 12px !important;
+    text-decoration: none;
+}
+.card-body a:hover{
+    text-decoration: underline;
+}
