@@ -1,8 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import "../Common.css";
 import { Formik } from 'formik';
+import { useState } from 'react';
 
 const Signup = () => {
+
+    //new state to store user form data.
+    const [formData, setFormData] = useState([]);
+
     return (
         <section>
             <div className="d-flex flex-column align-items-center">
@@ -18,21 +23,22 @@ const Signup = () => {
                             validate={values => {
                                 const errors = {};
 
-                                errors.fullname = !values.fullname && "Enter your name";
-                                errors.mNumber = !values.mNumber && "Enter your mobile number";
-                                errors.email = !values.email ? "Enter your email or mobile phone number" : (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) && "Invalid email address";
-                                errors.password = !values.password ? "Enter your password" : values.password.length < 8 && "Passwords must be at least 6 characters."
+                                (!values.fullname) && (errors.fullname = !values.fullname && "Enter your name");
+                                (!values.mNumber) && (errors.mNumber = !values.mNumber && "Enter your mobile number");
+                                (!values.email) && (errors.email = !values.email ? "Enter your email or mobile phone number" : (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) && "Invalid email address");
+                                (!values.password) && (errors.password = !values.password ? "Enter your password" : (values.password.length < 8) && "Passwords must be at least 6 characters.");
 
                                 return errors;
                             }}
                             onSubmit={(values, { setSubmitting }) => {
+                                setFormData([...formData, values]);
                                 setTimeout(() => {
                                     alert(JSON.stringify(values, null, 2));
                                     setSubmitting(false);
                                 }, 400);
                             }}
                         >
-                            {({ values, errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                            {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
                                 <form onSubmit={handleSubmit} method="POST">
                                     <h1>Create Account</h1>
                                     <div className="form_data">
@@ -76,7 +82,7 @@ const Signup = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
 

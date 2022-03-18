@@ -4,7 +4,7 @@ section {
     margin-bottom: 2.5rem;
 }
 
-.w-25{
+.w-25 {
     width: 350px !important;
 }
 
@@ -62,7 +62,7 @@ section {
 
 .shadow_divider::after {
     display: block;
-    height:44px !important;
+    height: 44px !important;
     background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0), #fff);
     z-index: 1;
     content: "";
@@ -84,7 +84,7 @@ section {
     font-weight: 600;
 }
 
-.sign_form .signin_info a:hover{
+.sign_form .signin_info a:hover {
     text-decoration: underline;
     cursor: pointer;
     color: #c45500 !important;
@@ -97,7 +97,7 @@ section {
 }
 
 .terms p {
-    font-size: 13px !important;
+    font-size: 12px !important;
     font-weight: 500;
 }
 
@@ -142,4 +142,29 @@ section {
     text-decoration: none !important;
     color: #111 !important;
     letter-spacing: .5px;
+}
+
+@media only screen and (max-width:321px) {
+    .w-25 {
+        width: 260px !important;
+    }
+
+    .form_err img {
+        width: 5px;
+    }
+
+    .form_err, .info p, span, .sign_form .signin_info p, .sign_form .signin_info a, .terms p {
+        font-size: x-small !important;
+    }
+
+    .span_line span:after,
+    .span_line span:before {
+        content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+        font-size: x-small;
+    }
+
+    .create_accountinfo button {
+        padding: 0.25rem 2.75rem;
+        font-size: x-small;
+    }
 }
