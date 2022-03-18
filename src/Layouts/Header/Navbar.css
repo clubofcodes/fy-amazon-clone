@@ -168,6 +168,7 @@ header nav .right .cart_text {
 }
 
 .right a {
+    color: #fff !important;
     text-decoration: none;
 }
 

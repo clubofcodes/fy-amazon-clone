@@ -1,5 +1,7 @@
 import { Banner } from './Banner';
 import './Home.css';
+import { ProductSlider } from './ProductSlider';
+import { products, products2, products3 } from "../../Assets/files/productData";
 
 export const HomeMainComp = () => {
 
@@ -20,9 +22,11 @@ export const HomeMainComp = () => {
 
     return (
         <div className="home_section">
+
             <div className="banner_part">
                 <Banner />
             </div>
+
             <div className="row mx-0 justify-content-evenly">
                 <div className="col-sm-3 category_card card my-3">
                     <div className="card-body">
@@ -130,7 +134,53 @@ export const HomeMainComp = () => {
                         <a href="#">Pay Now</a>
                     </div>
                 </div>
+                <div className="col-sm-3 category_card card my-3">
+                    <div className="card-body">
+                        <h5 className="">Professional tools, testing &amp; more</h5>
+                        <div className="row my-3">
+                            {cardBodyList.map((data, i) => (
+                                (i < 4) && <div className="col-sm-6" key={i}>
+                                    <img className="w-100" src={data.img} alt="" />
+                                    <p style={{ fontSize: 'x-small' }}>{data.text}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <a href="https://www.amazon.in/b?node=12414705031&pf_rd_r=X4VGXBDAT5WMBM2S0TJJ&pf_rd_p=47d02811-c3b6-4046-96fa-b28a4288a4a7&pd_rd_r=e4da1f29-b11a-4ed8-a666-e2a64a0c6b0a&pd_rd_w=kY1oA&pd_rd_wg=fBWlZ&ref_=pd_gw_unk">Explore All</a>
+                    </div>
+                </div>
             </div>
+
+            <div className="row mx-0 justify-content-evenly mb-3">
+                <div className="col-sm-9 px-2">
+                    <ProductSlider pTitle="Today’s Deals" pLinkText="See all deals" pData={products} />
+                </div>
+                <div className="col-sm-3 py-2 d-flex align-self-stretch px-3">
+                    <div className="card">
+                        <div className="card-body">
+                            <h5 className="">Festive latest launches</h5>
+                            <div className="card">
+                                <div className="card-body p-0">
+                                    <img className="w-100" src="https://images-eu.ssl-images-amazon.com/images/G/31/img21/Wireless/Jupiter/Launches/T3/DesktopGateway_CategoryCard2x_758X608_T3._SY608_CB639883570_.jpg" alt="Addvertise" height="250" />
+                                </div>
+                            </div>
+                            <a href="#">See More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ProductSlider
+                pTitle="Up to 50% off on electronic products | Small businesses"
+                pLinkText="See all offers"
+                pData={products2}
+            />
+
+            <p className="mt-4"></p>
+            <ProductSlider
+                pTitle="Up to 50% off on kitchen &amp; dining products | Small businesses"
+                pLinkText="See all offers"
+                pData={products3}
+            />
         </div>
     )
 }
