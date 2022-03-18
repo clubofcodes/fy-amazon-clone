@@ -4,6 +4,8 @@ import { CategoryBar } from "./Layouts/Category/CategoryBar";
 import Footer from "./Layouts/Footer/Footer";
 import Navbar from "./Layouts/Header/Navbar";
 import { HomeMainComp } from "./Layouts/Home/HomeMainComp";
+import Login from "./Screens/Login/Login";
+import Signup from "./Screens/Signup/Signup";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
       <CategoryBar />
       <Routes>
         <Route path="/" element={<HomeMainComp />} />
+        <Route path="/signin" element={<Login />} />
+        <Route path="/register" element={<Signup />} />
       </Routes>
       <Footer />
     </div>

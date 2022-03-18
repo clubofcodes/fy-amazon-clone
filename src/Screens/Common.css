@@ -1,0 +1,146 @@
+section {
+    position: relative;
+    width: 100%;
+    top: 60px;
+    margin-bottom: 2.5rem;
+}
+
+.w-25{
+    width: 350px !important;
+}
+
+.sign_form h1 {
+    font-weight: 500;
+    font-size: 27px;
+    margin: 10px 0;
+}
+
+.sign_form label {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 1px;
+    margin-top: 10px;
+}
+
+.sign_form input {
+    width: 100%;
+    height: 31px;
+    padding: 3px 7px;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid #a6a6a6;
+    margin-top: 1px;
+}
+
+.sign_form .signin_btn {
+    margin-top: 7px;
+    margin-bottom: 23px;
+    width: 100%;
+    background: #f3d078;
+    cursor: pointer;
+    border: 1px solid #9c7e31;
+    height: 29px;
+    outline: none;
+    border-radius: 3px;
+    color: #111;
+    background: linear-gradient(to bottom, #f7dfa5, #f0c14b)
+}
+
+.sign_form input:focus {
+    box-shadow: 0 0 5px 0px #ffbc2c;
+}
+
+.sign_form .signin_info {
+    margin-top: 23px;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.shadow_divider {
+    height: 2px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .14), rgba(0, 0, 0, .03) 3px, transparent);
+}
+
+.shadow_divider::after {
+    display: block;
+    height:44px !important;
+    background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0), #fff);
+    z-index: 1;
+    content: "";
+    width: 100%;
+}
+
+.sign_form .signin_info p {
+    font-size: 13px;
+    font-weight: 600;
+    color: #222;
+}
+
+.sign_form .signin_info a {
+    font-size: 13px;
+    letter-spacing: .5px;
+    margin-left: 5px;
+    color: #0066c0;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.sign_form .signin_info a:hover{
+    text-decoration: underline;
+    cursor: pointer;
+    color: #c45500 !important;
+}
+
+.form_err {
+    margin: 4px 0 0 0 !important;
+    font-size: 12px !important;
+    color: #c40000;
+}
+
+.terms p {
+    font-size: 13px !important;
+    font-weight: 500;
+}
+
+.terms span {
+    color: #0066c0 !important;
+}
+
+.span_line span {
+    font-size: 12px;
+    font-weight: 400;
+    color: #767676;
+}
+
+.span_line span:after,
+.span_line span:before {
+    content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+    color: #e7e7e7;
+    padding: 0 8px;
+    font-size: 11px;
+    text-decoration: line-through;
+}
+
+/* for login page */
+.create_accountinfo p {
+    font-size: 12px;
+    text-align: center;
+    color: #767676;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.create_accountinfo button {
+    background: linear-gradient(to bottom, #f7f8fa, #e7e9ec);
+    border-radius: 3px;
+    border: 1px solid #adb1b8;
+    outline: none;
+    padding: 0.25rem 4.25rem;
+    font-size: 14px;
+}
+
+.create_accountinfo a {
+    text-decoration: none !important;
+    color: #111 !important;
+    letter-spacing: .5px;
+}
