@@ -29,7 +29,7 @@ const Navbar = () => {
             <nav>
                 <div className="left">
                     <div className="navlogo">
-                        <NavLink to="/"><img src="./Assets/img/amazon_PNG25.png" alt="" /></NavLink>
+                        <NavLink to="/"><img src="./Assets/img/amazon_PNG25.png" alt="App Logo" /></NavLink>
                     </div>
                     <div className="nav_searchbaar">
                         <select
@@ -54,12 +54,12 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="right">
-                    <a href=''>
+                    <NavLink to="/signin">
                         <div className="nav_btn">
                             Hello, Sign in
                             <p>Account &amp; List <ArrowDropDownIcon fontSize="small" /> </p>
                         </div>
-                    </a>
+                    </NavLink>
                     <a href=''>
                         <div className="nav_btn">
                             Returns

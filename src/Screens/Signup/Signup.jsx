@@ -8,11 +8,11 @@ const Signup = () => {
             <div className="d-flex flex-column align-items-center">
 
                 <div className="app_logo">
-                    <img src="./Assets/img/amazon_black.png" alt="signupimg" width="150" />
+                    <NavLink to="/"><img src="./Assets/img/amazon_black.png" alt="App Logo" width="150" /></NavLink>
                 </div>
 
                 <div className="card w-25 mt-2">
-                    <div className="card-body sign_form">
+                    <div className="card-body sign_form pt-2">
                         <Formik
                             initialValues={{ fullname: '', mNumber: '', email: '', password: '' }}
                             validate={values => {

@@ -10,13 +10,13 @@ const Login = () => {
     return (
         <section>
             <div className="d-flex flex-column align-items-center">
-                
+
                 <div className="app_logo">
-                    <img src="./Assets/img/amazon_black.png" alt="signupimg" width="150" />
+                    <NavLink to="/"><img src="./Assets/img/amazon_black.png" alt="App Logo" width="150" /></NavLink>
                 </div>
 
-                <div className="card w-25 mt-2">
-                    <div className="card-body sign_form">
+                <div className="card w-25 mt-2 p-2">
+                    <div className="card-body sign_form py-0">
                         <Formik
                             initialValues={{ email: '', password: '' }}
                             validate={values => {
@@ -77,7 +77,7 @@ const Login = () => {
                 </div>
 
                 <div className="d-flex mt-3">
-                <p className="span_line"><span>New to Amazon?</span></p>
+                    <p className="span_line"><span>New to Amazon?</span></p>
                 </div>
                 <div className="create_accountinfo">
                     <button> <NavLink to="/register">Create your Amazon Account</NavLink></button>

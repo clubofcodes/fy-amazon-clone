@@ -1,6 +1,6 @@
-import { Banner } from './Banner';
+import { Banner } from './Banner/Banner';
 import './Home.css';
-import { ProductSlider } from './ProductSlider';
+import { ProductSlider } from './Slider/ProductSlider';
 import { products, products2, products3 } from "../../Assets/files/productData";
 
 export const HomeMainComp = () => {
