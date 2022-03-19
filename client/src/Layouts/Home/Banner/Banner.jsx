@@ -3,6 +3,7 @@ import './Banner.css';
 
 export const Banner = () => {
     const bannerImgList = [
+        "https://m.media-amazon.com/images/I/71eBXpqwYXL._SX3000_.jpg",
         "https://m.media-amazon.com/images/I/71YyQch1rQL._SX3000_.jpg",
         "https://m.media-amazon.com/images/I/61FuWeCuGCL._SX3000_.jpg",
         "https://m.media-amazon.com/images/I/81ypGyfK8mL._SX3000_.jpg",

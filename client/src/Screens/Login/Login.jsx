@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../Common.css";
 import { Formik } from "formik";
+import { useAuthentication } from "../../Utils/Context/useAuthentication";
 
 const Login = () => {
 
@@ -13,23 +14,31 @@ const Login = () => {
     const [err, setErr] = useState(null);
     //routing hook to go to particular path.
     const navigate = useNavigate();
+    //Custom hook to store logedIn user email to context.
+    const userAuth = useAuthentication();
 
     useEffect(() => {
         const loginUser = async () => {
             const response = await fetch("/login", {
-                method: "POST",
+                method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
 
             const verifiedData = await response.json();
 
-            (verifiedData?.error) ? setErr(verifiedData.error) : navigate("/", { replace: true });
-            !(verifiedData?.error) && setFormData({});
+            (verifiedData?.error) && setErr(verifiedData.error)
+
+            if (!verifiedData?.error) {
+                userAuth.login(verifiedData); //sets email in state of global context.
+                navigate("/", { replace: true });
+                setErr(null);
+            }
         }
         loginUser();
 
     }, [formData]);
+
 
     return (
         <section>

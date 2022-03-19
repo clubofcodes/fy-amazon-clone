@@ -1,7 +1,9 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const Products = require("../Models/productSchema");
 const Users = require("../Models/userSchema");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const secretKey = process.env.JWTKEY;
 
 //To get all products data from db.
 router.get("/getproducts", async (req, res) => {
@@ -45,7 +47,7 @@ router.post("/register", async (req, res) => {
 });
 
 //For user login.
-router.post("/login", async (req, res) => {
+router.patch("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -55,7 +57,20 @@ router.post("/login", async (req, res) => {
             const logedInUser = isNaN(email) ? await Users.findOne({ email: email }) : await Users.findOne({ mNumber: email });
             if (logedInUser) {
                 const isMatch = await bcrypt.compare(password, logedInUser.password);
-                (!isMatch) ? res.send({ error: "Invalid Credentials" }) : res.send({ message: "User found in database" });
+                if (!isMatch) res.send({ error: "Invalid Credentials" })
+                else {
+                    const token = jwt.sign({ _id: logedInUser._id }, secretKey);
+
+                    res.cookie("AmazonClone", token, {
+                        expires: new Date(Date.now() + 900000),
+                        httpOnly:true
+                    })
+
+                    res.header("auth-token", token);
+                    logedInUser.tokens[0] = { token: token };
+                    await logedInUser.save();
+                    res.send(logedInUser)
+                }
             } else res.send({ error: "User doesn't exist!!" });
         } catch (error) {
             console.log("Login Error:", error.message);

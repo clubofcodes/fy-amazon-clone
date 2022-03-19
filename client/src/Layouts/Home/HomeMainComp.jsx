@@ -26,7 +26,7 @@ export const HomeMainComp = () => {
 
     const { products } = useSelector(state => state.getproductsdata);
 
-    console.log("Home: ", products);
+    // console.log("Home: ", products);
 
     const dispatch = useDispatch();
 

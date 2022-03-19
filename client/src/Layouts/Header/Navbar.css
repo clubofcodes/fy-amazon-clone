@@ -17,6 +17,7 @@ header nav {
     align-items: center;
     z-index: 4;
 }
+
 header nav .navlogo {
     margin-left: 1.25rem;
 }
@@ -95,18 +96,61 @@ header nav .right {
     flex: .3;
 }
 
-header nav .right .nav_btn{
+header nav .right .nav_btn {
     font-size: small !important;
 }
 
-header nav .right a {
-    color: #fff;
+header nav .right .nav_atag {
+    color: #fff !important;
     font-weight: 400;
     text-decoration: none;
     margin-right: 5px;
     border: 1px solid #131921;
     border-radius: 2px;
     padding: 5px;
+}
+
+#signin_tag:hover+#dbox, .dropdown_box:hover {
+    display: flex !important;
+}
+
+.dropdown_box {
+    right: 10%;
+    padding: 14px;
+    position: absolute;
+    top: 90%;
+    left: auto;
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 0.4em;
+}
+
+.dropdown_box:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: 28.15%;
+    bottom: 58px;
+    border: 12px solid;
+    border-color: transparent transparent #fff transparent;
+}
+
+.dropdown_box a, .signin_dbtn {
+    text-decoration: none !important;
+    padding: 0 3.5rem !important;
+    line-height: 30px !important;
+    color: #111 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    height: 33px !important;
+    border: 1px solid !important;
+    border-radius: 3px !important;
+    border-color: #c89411 #b0820f #99710d !important;
+    background: linear-gradient(to bottom,#f8e3ad,#EEBA37);
+    background: -webkit-linear-gradient(top, #f6da95, #ecb21f) !important;
+    box-shadow: inset 0 1px 0 0 #fcf3dc !important;
 }
 
 header nav .right p {
@@ -165,11 +209,6 @@ header nav .right .cart_text {
     font-weight: 700;
     font-size: small;
     margin-top: 1rem;
-}
-
-.right a {
-    color: #fff !important;
-    text-decoration: none;
 }
 
 header nav .avtar {

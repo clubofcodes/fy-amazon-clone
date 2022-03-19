@@ -3,7 +3,7 @@
   height: 100vh;
   -webkit-mask-image: linear-gradient(180deg, black, transparent);
   z-index: -1;
-  margin-bottom: -200px !important;
+  margin-bottom: -150px !important;
 }
 
 .carasousel {
@@ -11,7 +11,7 @@
 }
 
 .banner_part .css-ohwg9z {
-  margin-bottom: -200px !important;
+  margin-bottom: -150px !important;
 }
 
 .banner_part .css-hn784z,

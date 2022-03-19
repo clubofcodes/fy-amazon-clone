@@ -4,6 +4,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useEffect, useRef } from 'react';
 import { resizeSelect } from '../../Utils/SelectResizer';
 import { NavLink } from 'react-router-dom';
+import { useAuthentication } from '../../Utils/Context/useAuthentication';
 
 const Navbar = () => {
 
@@ -11,6 +12,9 @@ const Navbar = () => {
 
     const SelectRef = useRef();
     const inputRef = useRef();
+
+    //Custom hook to verify is user logedIn.
+    const userAuth = useAuthentication();
 
     useEffect(() => {
         // resize on initial load
@@ -54,13 +58,16 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="right">
-                    <NavLink to="/signin">
+                    <NavLink className="nav_atag" to={!userAuth.userData?.email ? "/signin" : "/account"} id="signin_tag">
                         <div className="nav_btn">
-                            Hello, Sign in
+                            Hello, {!userAuth.userData?.email ? "Sign in" : userAuth.userData?.fullname.split(" ")[0]}
                             <p>Account &amp; List <ArrowDropDownIcon fontSize="small" /> </p>
                         </div>
                     </NavLink>
-                    <a href=''>
+                    <div className="dropdown_box card w-25 align-items-center d-none" id="dbox">
+                        {(!userAuth.userData?.email) ? <NavLink className="signin_dbtn" to="/signin" >Sign In</NavLink> : <NavLink className="signin_dbtn" to="/" onClick={() => userAuth.logout()} >Sign Out</NavLink>}
+                    </div>
+                    <a className="nav_atag" href=''>
                         <div className="nav_btn">
                             Returns
                             <p>&amp; Orders</p>
@@ -73,7 +80,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </nav>
-        </header>
+        </header >
     )
 }
 
