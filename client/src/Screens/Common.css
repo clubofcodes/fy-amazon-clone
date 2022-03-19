@@ -8,6 +8,35 @@ section {
     width: 350px !important;
 }
 
+.alert_container {
+    border-color: #111;
+    box-shadow: 0 0 0 4px #fffae7 inset;
+}
+
+.err_alert_container {
+    border-color: #c40000;
+    box-shadow: 0 0 0 4px #fcf4f4 inset;
+}
+
+.alert_heading {
+    color: #7c6200;
+    font-weight: 500;
+    font-size: 18px !important;
+}
+
+.err_alert_heading {
+    color: #c40000;
+    font-weight: 500;
+    font-size: 18px !important;
+}
+
+.alert_content {
+    padding-left: 2px;
+    font-weight: 400;
+    font-size: 12.5px !important;
+    padding-right: 8px;
+}
+
 .sign_form h1 {
     font-weight: 500;
     font-size: 27px;

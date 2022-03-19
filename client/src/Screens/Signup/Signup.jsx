@@ -1,12 +1,33 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import "../Common.css";
 import { Formik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Signup = () => {
 
     //new state to store user form data.
-    const [formData, setFormData] = useState([]);
+    const [formData, setFormData] = useState({});
+    const [err, setErr] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const registerUser = async () => {
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
+
+            const sentData = await response.json();
+            // console.log("Submited Data:", sentData);
+            // console.log("Submited Data:", response.status, sentData.error);
+
+            (sentData?.error) ? setErr({ status: response.status, err: sentData.error }) : navigate("/", { replace: true });
+            !(sentData?.error) && setFormData({});
+        }
+        registerUser();
+
+    }, [formData]);
 
     return (
         <section>
@@ -16,7 +37,36 @@ const Signup = () => {
                     <NavLink to="/"><img src="./Assets/img/amazon_black.png" alt="App Logo" width="150" /></NavLink>
                 </div>
 
-                <div className="card w-25 mt-2">
+                {(err && err.status === 322) &&
+                    <div className="card w-25 mt-1 err_alert_container px-1">
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-sm-2">
+                                    <img src="./Assets/img/err_alert.png" alt="Error Alert" width="30" />
+                                </div>
+                                <div className="col-sm-10 px-0">
+                                    <h4 className="err_alert_heading mb-1">There was a problem</h4>
+                                    <p className="alert_content mb-0">Your provided Email {formData?.email} has already been used. Please use another Email address.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
+                {(err && err.status === 422) &&
+                    <div className="card w-25 mt-1 alert_container px-1">
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-sm-2">
+                                    <img src="./Assets/img/warn_alert.png" alt="Warning Alert" width="30" />
+                                </div>
+                                <div className="col-sm-10 px-0">
+                                    <h4 className="alert_heading mb-1">Mobile number already in use</h4>
+                                    <p className="alert_content mb-0">You indicated you are a new customer, but an account already exists with the mobile number <b>+91{formData?.mNumber}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
+
+                <div className="card w-25 mt-3">
                     <div className="card-body sign_form pt-2">
                         <Formik
                             initialValues={{ fullname: '', mNumber: '', email: '', password: '' }}
@@ -25,15 +75,24 @@ const Signup = () => {
 
                                 (!values.fullname) && (errors.fullname = !values.fullname && "Enter your name");
                                 (!values.mNumber) && (errors.mNumber = !values.mNumber && "Enter your mobile number");
-                                (!values.email) && (errors.email = !values.email ? "Enter your email or mobile phone number" : (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) && "Invalid email address");
-                                (!values.password) && (errors.password = !values.password ? "Enter your password" : (values.password.length < 8) && "Passwords must be at least 6 characters.");
+                                if (!values.email) {
+                                    errors.email = "Enter your email";
+                                } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)){
+                                    errors.email = "Invalid email address";
+                                }
+                                if (!values.password) {
+                                    errors.password = "Enter your password";
+                                } else if(values.password.length < 6){
+                                    errors.password = "Passwords must be at least 6 characters."
+                                }
 
                                 return errors;
                             }}
                             onSubmit={(values, { setSubmitting }) => {
-                                setFormData([...formData, values]);
+                                setFormData({ ...formData, ...values });
+
                                 setTimeout(() => {
-                                    alert(JSON.stringify(values, null, 2));
+                                    // alert(JSON.stringify(values, null, 2));
                                     setSubmitting(false);
                                 }, 400);
                             }}
