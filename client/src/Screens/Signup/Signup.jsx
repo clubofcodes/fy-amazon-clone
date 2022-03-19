@@ -7,7 +7,9 @@ const Signup = () => {
 
     //new state to store user form data.
     const [formData, setFormData] = useState({});
+    //new state to store error getting from server.
     const [err, setErr] = useState(null);
+    //routing hook to go to particular path.
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -32,7 +32,7 @@ section {
 
 .alert_content {
     padding-left: 2px;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 12.5px !important;
     padding-right: 8px;
 }
@@ -75,7 +75,8 @@ section {
 }
 
 .sign_form input:focus {
-    box-shadow: 0 0 5px 0px #ffbc2c;
+    border-color: #e77600;
+    box-shadow: 0 0 3px 2px rgb(228 121 17 / 50%);
 }
 
 .sign_form .signin_info {

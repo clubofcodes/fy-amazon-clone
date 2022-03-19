@@ -38,10 +38,30 @@ router.post("/register", async (req, res) => {
                 res.send(UserData);
             }
         } catch (error) {
-            console.log("Error:", error.message);
+            console.log("Signup Error:", error.message);
             res.send({ error });
         }
     }
-})
+});
+
+//For user login.
+router.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.send({ error: "Fill all the details" });
+    } else {
+        try {
+            const logedInUser = isNaN(email) ? await Users.findOne({ email: email }) : await Users.findOne({ mNumber: email });
+            if (logedInUser) {
+                const isMatch = await bcrypt.compare(password, logedInUser.password);
+                (!isMatch) ? res.send({ error: "Invalid Credentials" }) : res.send({ message: "User found in database" });
+            } else res.send({ error: "User doesn't exist!!" });
+        } catch (error) {
+            console.log("Login Error:", error.message);
+            res.send({ error });
+        }
+    }
+});
 
 module.exports = router;
