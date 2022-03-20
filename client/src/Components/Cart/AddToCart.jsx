@@ -1,10 +1,10 @@
 import "./Cart.css";
-import { Divider } from "@mui/material";
+import { CircularProgress, Divider } from "@mui/material";
 import DropDown from "./Parts/DropDown";
 import SubTotal from "./Parts/SubTotal";
-import { products } from "../../Assets/files/productData";
 import BuyBox from "./Parts/BuyBox";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import EmptyCart from "./Parts/EmptyCart";
 
 const AddToCart = () => {
 
@@ -26,7 +26,6 @@ const AddToCart = () => {
 
     useEffect(() => {
         getCartData();
-        console.log(StoredCartData);
     }, []);
 
     return (
@@ -58,7 +57,12 @@ const AddToCart = () => {
                     <SubTotal cartItem={StoredCartData} />
                 </div>
                 <BuyBox cartItem={StoredCartData} />
-            </div> : ""}
+            </div> :
+                <div className="loading d-flex flex-column justify-content-center align-items-center h-100 p-5">
+                    <CircularProgress />
+                    <h2>Loading....</h2>
+                </div>
+            }
         </div>
     )
 }

@@ -28,7 +28,7 @@ const ProductView = () => {
         });
 
         const productData = await productResponse.json();
-        (productResponse.status !== 200) ? alert("No such product") : setProductData(productData);
+        (productResponse.status !== 200) ? console.log("No such product") : setProductData(productData);
     };
 
     useEffect(() => {

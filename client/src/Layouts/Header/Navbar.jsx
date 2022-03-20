@@ -114,7 +114,7 @@ const Navbar = () => {
                         </div>
                     </a>
                     <NavLink className="nav_atag cart_btn cart_inset" to={!userAuth.userData?.email ? "/signin" : "/cart"}>
-                        <span className="cart_count">{userAuth.userData?.carts.length}</span>
+                        <span className="cart_count">{userAuth.userData?.carts.length || 0}</span>
                         <img src="./Assets/img/cart.png" alt="" height="34" />
                         <span className="cart_text">Cart</span>
                     </NavLink>

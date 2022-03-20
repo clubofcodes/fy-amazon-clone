@@ -19,7 +19,7 @@ const Login = () => {
 
     useEffect(() => {
         const getValidUserData = async () => {
-            const res = await fetch("/validuser", {
+            const validUserResponse = await fetch("/validuser", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -28,15 +28,9 @@ const Login = () => {
                 credentials: "include"
             });
     
-            const data = await res.json();
-            console.log(data);
-    
-            if (res.status !== 200) {
-                console.log("First login");
-            } else {
-                console.log("Already login");
-                userAuth.login(data); //sets logedInEmail data in state of global context.
-            }
+            const validUserData = await validUserResponse.json();
+            // console.log(validUserData);
+            (validUserResponse.status !== 200) ? console.log("First login") : userAuth.login(validUserData); //sets logedInEmail data in state of global context.
         }
         getValidUserData();
         const loginUser = async () => {

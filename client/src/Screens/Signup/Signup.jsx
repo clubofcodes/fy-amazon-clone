@@ -16,7 +16,7 @@ const Signup = () => {
     const userAuth = useAuthentication();
 
     const getValidUserData = async () => {
-        const res = await fetch("/validuser", {
+        const validUserResponse = await fetch("/validuser", {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -25,31 +25,25 @@ const Signup = () => {
             credentials: "include"
         });
 
-        const data = await res.json();
-        console.log(data);
-
-        if (res.status !== 200) {
-            console.log("First login");
-        } else {
-            console.log("Already login");
-            userAuth.login(data); //sets logedInEmail data in state of global context.
-        }
+        const validUserData = await validUserResponse.json();
+        // console.log(validUserData);
+        (validUserResponse.status !== 200) ? console.log("First login") : userAuth.login(validUserData); //sets logedInEmail data in state of global context.
     }
 
     useEffect(() => {
         getValidUserData();
         const registerUser = async () => {
-            const response = await fetch("/register", {
+            const addUserResponse = await fetch("/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
 
-            const sentData = await response.json();
+            const sentData = await addUserResponse.json();
             // console.log("Submited Data:", sentData);
-            // console.log("Submited Data:", response.status, sentData.error);
+            // console.log("Submited Data:", addUserResponse.status, sentData.error);
 
-            (sentData?.error) ? setErr({ status: response.status, err: sentData.error }) : navigate("/", { replace: true });
+            (sentData?.error) ? setErr({ status: addUserResponse.status, err: sentData.error }) : navigate("/", { replace: true });
             !(sentData?.error) && setFormData({});
         }
         registerUser();
@@ -168,7 +162,7 @@ const Signup = () => {
                     </div>
                 </div>
             </div>
-        </section >
+        </section>
     )
 }
 
