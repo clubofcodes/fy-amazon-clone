@@ -11,6 +11,7 @@ import Login from "./Screens/Login/Login";
 import Signup from "./Screens/Signup/Signup";
 import { AuthProvider } from './Utils/Context/useAuthentication';
 import { ProtectComponent } from "./Utils/ProtectComponent";
+import { ProtectCartComponent } from "./Utils/ProtectCartComponent";
 
 function App() {
   return (
@@ -30,7 +31,11 @@ function App() {
             </ProtectComponent>
           } />
           <Route path="/product/:id" element={<><Navbar /><CategoryBar /><ProductView /><Footer /></>} />
-          <Route path="/cart/:id" element={<><Navbar /><CategoryBar /><AddToCart /><Footer /></>} />
+          <Route path="/cart" element={<>
+            <ProtectCartComponent>
+              <Navbar /><CategoryBar /><AddToCart /><Footer />
+            </ProtectCartComponent>
+          </>} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthProvider>

@@ -20,7 +20,7 @@ const Navbar = () => {
 
     //For user login verification using cookie.
     const getValidUserData = async () => {
-        const res = await fetch("/validuser", {
+        const validUserResponse = await fetch("/validuser", {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -29,15 +29,8 @@ const Navbar = () => {
             credentials: "include"
         });
 
-        const data = await res.json();
-        console.log(data);
-
-        if (res.status !== 200) {
-            console.log("First login");
-        } else {
-            console.log("Already login");
-            userAuth.login(data); //sets logedInEmail data in state of global context.
-        }
+        const validUserData = await validUserResponse.json();
+        (validUserResponse.status !== 200) ? console.log("First login") : userAuth.login(validUserData);
     }
 
     useEffect(() => {
@@ -120,8 +113,8 @@ const Navbar = () => {
                             <p>&amp; Orders</p>
                         </div>
                     </a>
-                    <NavLink className="nav_atag cart_btn cart_inset" to="/cart/1">
-                        <span className="cart_count">5</span>
+                    <NavLink className="nav_atag cart_btn cart_inset" to={!userAuth.userData?.email ? "/signin" : "/cart"}>
+                        <span className="cart_count">{userAuth.userData?.carts.length}</span>
                         <img src="./Assets/img/cart.png" alt="" height="34" />
                         <span className="cart_text">Cart</span>
                     </NavLink>

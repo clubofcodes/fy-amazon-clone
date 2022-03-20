@@ -63,7 +63,7 @@ router.patch("/login", async (req, res) => {
                     const token = jwt.sign({ _id: logedInUser._id }, secretKey);
 
                     res.cookie("AmazonClone", token, {
-                        expires: new Date(Date.now() + 900000),
+                        expires: new Date(Date.now() + 172800000),
                         httpOnly: true
                     })
 
@@ -111,6 +111,34 @@ router.get("/product/:id", async (req, res) => {
         const { id } = req.params;
         const individual = await Products.findOne({ "title.longTitle": id });
         res.send(individual);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
+//For adding the data into cart
+router.post("/addtocart/:id", Authenticate, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const cartProduct = await Products.findOne({ "title.longTitle": id });
+
+        const logedInUserData = await Users.findOne({ _id: req.userID });
+
+        if (logedInUserData && cartProduct) {
+            logedInUserData.carts = await logedInUserData.carts.concat(cartProduct);
+            await logedInUserData.save();
+            res.send(logedInUserData);
+        } else res.send({ error: "User Not Logedin or doesn't exist!!" });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+//To get data from the cart
+router.get("/cartdetails", Authenticate, async (req, res) => {
+    try {
+        const logedInUserCartData = await Users.findOne({ _id: req.userID });
+        res.send(logedInUserCartData);
     } catch (error) {
         res.send(error);
     }
