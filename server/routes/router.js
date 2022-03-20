@@ -144,4 +144,20 @@ router.get("/cartdetails", Authenticate, async (req, res) => {
     }
 });
 
+//To remove item from the cart
+router.get("/removeitem/:id", Authenticate, async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        req.currentUser.carts = req.currentUser.carts.filter((item) => {
+            return item.id != id
+        });
+
+        req.currentUser.save();
+        res.send(req.currentUser);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
 module.exports = router;

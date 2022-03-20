@@ -217,12 +217,9 @@
     padding: 7px 13px;
     text-decoration: none;
     background-color:#007185;
-    color: #fff;
+    color: #fff !important;
     border-radius: 5px;
 }
-
-
-
 
 /* media query */
 
