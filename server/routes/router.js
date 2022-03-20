@@ -105,4 +105,15 @@ router.get("/logout", Authenticate, async (req, res) => {
     }
 });
 
+//To get individual product data.
+router.get("/product/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const individual = await Products.findOne({ "title.longTitle": id });
+        res.send(individual);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
 module.exports = router;

@@ -80,7 +80,7 @@ const products = [
             cost: 1124,
             discount: '40%'
         },
-        description: '',
+        description: 'Professional AC motor: 5x longer life cycle vs conventional dryer, Includes Cool Shot Button that provides a burst of cold air to help set the desired hairstyle, Includes Diffuser for controlled airflow over wider scalp area esp. for curly hair, Removable filter for easy cleaning . Length Of Chord - 1.6 Metres, Controls consistent optimal temperature for healthy drying and professional styling',
         discount: 'From ₹499',
         tagline: 'Kubra, Nova & more'
     },

@@ -51,7 +51,7 @@ export const ProductSlider = ({ pTitle, pLinkText, pData }) => {
             >
                 {
                     pData.map((product, index) => (
-                        <NavLink className="products_items pb-4 text-decoration-none" to={"/product/" + index} key={index} >
+                        <NavLink className="products_items pb-4 text-decoration-none" to={`/product/${product.title.longTitle}`} key={index} >
                             <div className="product_img">
                                 <img src={product.url} alt={product.id} />
                             </div>
