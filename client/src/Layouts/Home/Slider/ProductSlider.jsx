@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import { Divider } from "@mui/material";
 import "./ProductSlider.css";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 export const ProductSlider = ({ pTitle, pLinkText, pData }) => {
 
@@ -50,14 +51,14 @@ export const ProductSlider = ({ pTitle, pLinkText, pData }) => {
             >
                 {
                     pData.map((product, index) => (
-                        <div className="products_items pb-4" key={index} >
+                        <NavLink className="products_items pb-4 text-decoration-none" to={"/product/" + index} key={index} >
                             <div className="product_img">
                                 <img src={product.url} alt={product.id} />
                             </div>
                             <p className="products_name">{product.title.shortTitle}</p>
                             <p className="products_offer mt-0">₹{product.price.mrp}&nbsp;({product.discount})</p>
                             <p className="products_explore mt-0">{product.tagline && product.tagline}</p>
-                        </div>
+                        </NavLink>
                     ))
                 }
 

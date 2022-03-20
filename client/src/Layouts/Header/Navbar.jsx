@@ -120,11 +120,11 @@ const Navbar = () => {
                             <p>&amp; Orders</p>
                         </div>
                     </a>
-                    <div className="cart_btn cart_inset">
+                    <NavLink className="nav_atag cart_btn cart_inset" to="/cart/1">
                         <span className="cart_count">5</span>
                         <img src="./Assets/img/cart.png" alt="" height="34" />
                         <span className="cart_text">Cart</span>
-                    </div>
+                    </NavLink>
                 </div>
             </nav>
         </header >
