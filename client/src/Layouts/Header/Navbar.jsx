@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useEffect, useRef } from 'react';
 import { resizeSelect } from '../../Utils/SelectResizer';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthentication } from '../../Utils/Context/useAuthentication';
 
 const Navbar = () => {
@@ -15,8 +15,34 @@ const Navbar = () => {
 
     //Custom hook to verify is user logedIn.
     const userAuth = useAuthentication();
+    //routing hook to go to particular path.
+    const navigate = useNavigate();
+
+    //For user login verification using cookie.
+    const getValidUserData = async () => {
+        const res = await fetch("/validuser", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        });
+
+        const data = await res.json();
+        console.log(data);
+
+        if (res.status !== 200) {
+            console.log("First login");
+        } else {
+            console.log("Already login");
+            userAuth.login(data); //sets logedInEmail data in state of global context.
+        }
+    }
 
     useEffect(() => {
+        getValidUserData();
+
         // resize on initial load
         resizeSelect(SelectRef.current);
 
@@ -27,6 +53,27 @@ const Navbar = () => {
 
     }, []);
 
+    //For user logout
+    const logoutuser = async () => {
+        const logoutResponse = await fetch("/logout", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        });
+
+        await logoutResponse.json();
+
+        if (!logoutResponse.status === 200) {
+            const error = new Error(logoutResponse.error);
+            throw error;
+        } else {
+            userAuth.logout();
+            navigate("/", { replace: true });
+        }
+    }
 
     return (
         <header>
@@ -65,7 +112,7 @@ const Navbar = () => {
                         </div>
                     </NavLink>
                     <div className="dropdown_box card w-25 align-items-center d-none" id="dbox">
-                        {(!userAuth.userData?.email) ? <NavLink className="signin_dbtn" to="/signin" >Sign In</NavLink> : <NavLink className="signin_dbtn" to="/" onClick={() => userAuth.logout()} >Sign Out</NavLink>}
+                        {(!userAuth.userData?.email) ? <NavLink className="signin_dbtn" to="/signin" >Sign In</NavLink> : <NavLink className="signin_dbtn" to="/" onClick={() => logoutuser()} >Sign Out</NavLink>}
                     </div>
                     <a className="nav_atag" href=''>
                         <div className="nav_btn">

@@ -4,6 +4,7 @@ const Users = require("../Models/userSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secretKey = process.env.JWTKEY;
+const Authenticate = require("../Middleware/VerifyToken");
 
 //To get all products data from db.
 router.get("/getproducts", async (req, res) => {
@@ -63,19 +64,44 @@ router.patch("/login", async (req, res) => {
 
                     res.cookie("AmazonClone", token, {
                         expires: new Date(Date.now() + 900000),
-                        httpOnly:true
+                        httpOnly: true
                     })
 
                     res.header("auth-token", token);
                     logedInUser.tokens[0] = { token: token };
                     await logedInUser.save();
-                    res.send(logedInUser)
+                    res.send(logedInUser);
                 }
             } else res.send({ error: "User doesn't exist!!" });
         } catch (error) {
             console.log("Login Error:", error.message);
             res.send({ error });
         }
+    }
+});
+
+//For user login and verifying token to store in cookie.
+router.get("/validuser", Authenticate, async (req, res) => {
+    try {
+        const ValidCurrentUser = await Users.findOne({ _id: req.userID });
+        console.log(ValidCurrentUser);
+        res.send(ValidCurrentUser);
+    } catch (error) {
+        console.log(error + "error for valid user");
+    }
+});
+
+//For user logout
+router.get("/logout", Authenticate, async (req, res) => {
+    try {
+        req.currentUser.tokens = req.currentUser.tokens.filter((curelem) => curelem.token !== req.token);
+        res.clearCookie("AmazonClone", { path: "/" });
+        req.currentUser.save();
+        res.send(req.currentUser.tokens);
+        console.log("user logout");
+
+    } catch (error) {
+        console.log(error);
     }
 });
 

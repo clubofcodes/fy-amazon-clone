@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import "../Common.css";
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
+import { useAuthentication } from '../../Utils/Context/useAuthentication';
 
 const Signup = () => {
 
@@ -11,8 +12,32 @@ const Signup = () => {
     const [err, setErr] = useState(null);
     //routing hook to go to particular path.
     const navigate = useNavigate();
+    //Custom hook to verify is user logedIn.
+    const userAuth = useAuthentication();
+
+    const getValidUserData = async () => {
+        const res = await fetch("/validuser", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        });
+
+        const data = await res.json();
+        console.log(data);
+
+        if (res.status !== 200) {
+            console.log("First login");
+        } else {
+            console.log("Already login");
+            userAuth.login(data); //sets logedInEmail data in state of global context.
+        }
+    }
 
     useEffect(() => {
+        getValidUserData();
         const registerUser = async () => {
             const response = await fetch("/register", {
                 method: "POST",
@@ -79,12 +104,12 @@ const Signup = () => {
                                 (!values.mNumber) && (errors.mNumber = !values.mNumber && "Enter your mobile number");
                                 if (!values.email) {
                                     errors.email = "Enter your email";
-                                } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)){
+                                } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
                                     errors.email = "Invalid email address";
                                 }
                                 if (!values.password) {
                                     errors.password = "Enter your password";
-                                } else if(values.password.length < 6){
+                                } else if (values.password.length < 6) {
                                     errors.password = "Passwords must be at least 6 characters."
                                 }
 
