@@ -5,12 +5,16 @@ import SubTotal from "./Parts/SubTotal";
 import BuyBox from "./Parts/BuyBox";
 import { useEffect, useState } from "react";
 import EmptyCart from "./Parts/EmptyCart";
+import { useNavigate } from "react-router-dom";
 
 const AddToCart = () => {
+    var totalItem = 0;
 
     const [StoredCartData, setCartData] = useState([]);
     //New state for loading
     const [isLoading, setIsLoading] = useState(true);
+    //for navigating to particular component.
+    const navigate = useNavigate();
 
     const getCartData = async () => {
         const getCartDataRes = await fetch("/cartdetails", {
@@ -48,7 +52,7 @@ const AddToCart = () => {
                                 {StoredCartData.map((cart, index) => (
                                     <>
                                         <div className="item_containert" key={index}>
-                                            <img src={cart.detailUrl} alt="Single Product" />
+                                            <img className="pe-auto" src={cart.detailUrl} alt="Single Product" onClick={() => navigate(`/product/${cart.title.longTitle}`)} />
                                             <div className="item_details">
                                                 <h3>{cart.title.shortTitle}</h3>
                                                 <h4>{cart.title.longTitle}</h4>
@@ -56,16 +60,17 @@ const AddToCart = () => {
                                                 <p className="unusuall">Usually dispatched in 8 days.</p>
                                                 <p>Eligible for FREE Shipping</p>
                                                 <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png" alt="logo" />
-                                                <DropDown deleteData={cart.id} updateCartData={getCartData} />
+                                                <DropDown deleteData={cart.id} updateCartData={getCartData} qty={cart.qty} />
                                             </div>
                                             <h3 className="item_price">₹{cart.price.cost}.00</h3>
+                                            <h1 hidden>{totalItem += cart.qty}</h1>
                                         </div>
                                         <Divider />
                                     </>
                                 ))}
-                                <SubTotal cartItem={StoredCartData} />
+                                <SubTotal cartItem={StoredCartData} qty={totalItem} />
                             </div>
-                            <BuyBox cartItem={StoredCartData} />
+                            <BuyBox cartItem={StoredCartData} qty={totalItem} />
                         </div>
                     </div> : <EmptyCart />}
         </>

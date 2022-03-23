@@ -18,27 +18,9 @@ const Navbar = () => {
     //routing hook to go to particular path.
     const navigate = useNavigate();
 
-    //For user login verification using cookie.
-    const getValidUserData = async () => {
-        const validUserResponse = await fetch("/validuser", {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            credentials: "include"
-        });
-
-        const validUserData = await validUserResponse.json();
-        (validUserResponse.status !== 200) ? console.log("First login") : userAuth.login(validUserData);
-    }
-
     useEffect(() => {
-        getValidUserData();
-
         // resize on initial load
         resizeSelect(SelectRef.current);
-
         SelectRef.current.addEventListener('change', (e) => {
             resizeSelect(e.target);
             inputRef.current.focus();
@@ -114,7 +96,7 @@ const Navbar = () => {
                         </div>
                     </a>
                     <NavLink className="nav_atag cart_btn cart_inset" to={!userAuth.userData?.email ? "/signin" : "/cart"}>
-                        <span className="cart_count">{userAuth.userData?.carts.length || 0}</span>
+                        <span className="cart_count">{userAuth.userData?.carts?.reduce((total, first) => (total + first.qty), 0) || 0}</span>
                         <img src="./Assets/img/cart.png" alt="" height="34" />
                         <span className="cart_text">Cart</span>
                     </NavLink>

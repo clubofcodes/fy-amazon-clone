@@ -7,7 +7,7 @@ const DefaultData = async () => {
         await Products.deleteMany({});
         //Storing data in mongodb collection.
         const storeData = await Products.insertMany(productsData);
-        console.log(storeData);
+        // console.log(storeData);
     } catch (error) {
         console.log("Error", error.message);
     }

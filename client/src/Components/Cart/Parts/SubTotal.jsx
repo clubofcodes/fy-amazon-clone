@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const SubTotal = ({cartItem}) => {
+const SubTotal = ({cartItem, qty}) => {
     const [price, setPrice] = useState(0);
 
     useEffect(() => {
@@ -10,13 +10,13 @@ const SubTotal = ({cartItem}) => {
     const totalAmount = () => {
         let price = 0
         cartItem.map((item) => {
-            price += item.price.cost
+            price += (item.price.cost * item.qty)
         });
         setPrice(price)
     }
     return (
         <div className="sub_item">
-            <h3>Subtotal ({cartItem.length} items):<strong style={{ fontWeight: "700", color: "#111" }}> ₹{price}.00</strong></h3>
+            <h3>Subtotal ({qty} items):<strong style={{ fontWeight: "700", color: "#111" }}> ₹{price}.00</strong></h3>
         </div>
     )
 }

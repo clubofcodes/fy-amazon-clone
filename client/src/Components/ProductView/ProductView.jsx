@@ -37,18 +37,44 @@ const ProductView = () => {
 
     //Add to cart and store to db.
     const addToCart = async (id) => {
+        var storeCartProductData;
+        //To verify product is already there in cart then increases qty field.
+        const oldData = await fetch(`/cartdetails`, {
+            method: "GET", headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            }, credentials: "include"
+        }).then((res) => res.json()).then((data) => {
+            // console.log(data);
+            var oldData = {};
+            data.carts.filter((item) => {
+                // item.qty = item.title.longTitle === id && item.qty + 1
+                return item.title.longTitle === id
+            }).map((fData) => {
+                fData.qty = fData.qty + 1
+                oldData = fData
+                // console.log("fData: ",fData);
+            })
+            storeCartProductData = Object.keys(oldData).length > 0 ? oldData : { ...StoredProductData, qty: 1 };
+            // console.log("storeCartProductData: ",storeCartProductData);
+        });
+        //Actual code to store product in cart array.
         const addedToCartResponse = await fetch(`/addtocart/${id}`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(StoredProductData),
+            body: JSON.stringify({ ...storeCartProductData }),
             credentials: "include"
         });
 
         const cartProductData = await addedToCartResponse.json();
-        (addedToCartResponse.status !== 200) ? console.log("No such data available") : userAuth.login(cartProductData);
+        if (addedToCartResponse.status !== 200) console.log("No such data available")
+        else {
+            userAuth.login(cartProductData);
+            navigate("/cart");
+        };
     }
 
     return (
@@ -58,7 +84,7 @@ const ProductView = () => {
                     <div className="left_cart">
                         <img src={StoredProductData.detailUrl} alt="Single Product" />
                         <div className="cart_btn">
-                            <button className="cart_btn1" onClick={() => addToCart(StoredProductData.title.longTitle)}>Add to Cart</button>
+                            <button className="cart_btn1" onClick={() => userAuth.userData?.email ? addToCart(StoredProductData.title.longTitle) : navigate("/signin")}>Add to Cart</button>
                             <button className="cart_btn2">Buy Now</button>
                         </div>
                     </div>

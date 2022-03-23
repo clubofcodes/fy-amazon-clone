@@ -18,21 +18,6 @@ const Login = () => {
     const userAuth = useAuthentication();
 
     useEffect(() => {
-        const getValidUserData = async () => {
-            const validUserResponse = await fetch("/validuser", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                credentials: "include"
-            });
-    
-            const validUserData = await validUserResponse.json();
-            // console.log(validUserData);
-            (validUserResponse.status !== 200) ? console.log("First login") : userAuth.login(validUserData); //sets logedInEmail data in state of global context.
-        }
-        getValidUserData();
         const loginUser = async () => {
             const response = await fetch("/login", {
                 method: "PATCH",
@@ -53,7 +38,6 @@ const Login = () => {
         loginUser();
 
     }, [formData]);
-
 
     return (
         <section>

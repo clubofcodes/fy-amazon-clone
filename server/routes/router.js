@@ -84,7 +84,7 @@ router.patch("/login", async (req, res) => {
 router.get("/validuser", Authenticate, async (req, res) => {
     try {
         const ValidCurrentUser = await Users.findOne({ _id: req.userID });
-        console.log(ValidCurrentUser);
+        // console.log(ValidCurrentUser);
         res.send(ValidCurrentUser);
     } catch (error) {
         console.log(error + "error for valid user");
@@ -125,9 +125,21 @@ router.post("/addtocart/:id", Authenticate, async (req, res) => {
         const logedInUserData = await Users.findOne({ _id: req.userID });
 
         if (logedInUserData && cartProduct) {
-            logedInUserData.carts = await logedInUserData.carts.concat(cartProduct);
+            if (logedInUserData.carts.length > 0) {
+                let isDuplicate = false;
+                for (var i = 0; i < logedInUserData.carts.length; i++) {
+                    if (req.body.id === logedInUserData.carts[i].id) {
+                        logedInUserData.carts[i] = req.body;
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+                if (!isDuplicate) logedInUserData.carts = await logedInUserData.carts.concat(req.body);
+            } else logedInUserData.carts = await logedInUserData.carts.concat(req.body);
+
             await logedInUserData.save();
             res.send(logedInUserData);
+            // console.log(JSON.stringify(logedInUserData?.carts, null, 2));
         } else res.send({ error: "User Not Logedin or doesn't exist!!" });
     } catch (error) {
         console.log(error);

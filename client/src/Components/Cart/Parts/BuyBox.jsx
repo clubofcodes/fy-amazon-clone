@@ -2,26 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import SubTotal from './SubTotal';
 
-const BuyBox = ({cartItem}) => {
+const BuyBox = ({cartItem, qty}) => {
 
     const [val, setVal] = useState(false);
 
-    const [price, setPrice] = useState(0);
-
     const navigate = useNavigate();
-
-    useEffect(() => {
-        totalAmount();
-    }, [cartItem]);
-
-    const totalAmount = () => {
-        let price = 0
-        cartItem.map((item) => {
-            price += item.price.cost
-        });
-        setPrice(price)
-    }
 
     const proceedToBy = ()=>{
         console.log("Your Order is Confirmed");
@@ -34,7 +21,7 @@ const BuyBox = ({cartItem}) => {
             <div className="cost_right">
                 <p>Your order is eligible for FREE Delivery. <br />
                     <span style={{ color: "#565959" }}> Select this option at checkout. Details</span></p>
-                <h3>Subtotal ({cartItem.length} items): <span style={{ fontWeight: "700" }}> ₹{price}.00</span></h3>
+                <SubTotal cartItem={cartItem} qty={qty} />
                 <button className="rightbuy_btn" onClick={proceedToBy}>Proceed to Buy</button>
                 <div className="emi" onClick={() => setVal(!val)}>
                     Emi available
