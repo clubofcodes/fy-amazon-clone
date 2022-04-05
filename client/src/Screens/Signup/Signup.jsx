@@ -90,7 +90,7 @@ const Signup = () => {
                 <div className="card w-25 mt-3">
                     <div className="card-body sign_form pt-2">
                         <Formik
-                            initialValues={{ fullname: '', mNumber: '', email: '', password: '' }}
+                            initialValues={{ fullname: '', mNumber: '', email: '', password: '', userRole:'customer' }}
                             validate={values => {
                                 const errors = {};
 

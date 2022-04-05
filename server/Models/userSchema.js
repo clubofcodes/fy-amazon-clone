@@ -34,7 +34,8 @@ const userSchema = mongoose.Schema({
             }
         }
     ],
-    carts: Array
+    carts: Array,
+    userRole: String
 });
 
 const Users = mongoose.model("User", userSchema);

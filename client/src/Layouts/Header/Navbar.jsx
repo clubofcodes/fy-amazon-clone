@@ -3,8 +3,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useEffect, useRef } from 'react';
 import { resizeSelect } from '../../Utils/SelectResizer';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthentication } from '../../Utils/Context/useAuthentication';
+import Footer from '../Footer/Footer';
 
 const Navbar = () => {
 
@@ -51,58 +52,62 @@ const Navbar = () => {
     }
 
     return (
-        <header>
-            <nav>
-                <div className="left">
-                    <div className="navlogo">
-                        <NavLink to="/"><img src="./Assets/img/amazon_PNG25.png" alt="App Logo" /></NavLink>
-                    </div>
-                    <div className="nav_searchbaar">
-                        <select
-                            ref={SelectRef}
-                            name='searchSelect'
-                            className='SearchSelect'
-                            defaultValue='All'>
-                            <option value='All'>All</option>
-                            {Categories &&
-                                Categories.map((option, index) => {
-                                    return (
-                                        <option key={index} value={option}>
-                                            {option}
-                                        </option>
-                                    );
-                                })}
-                        </select>
-                        <input ref={inputRef} type="text" name="" placeholder="Search Your Products" />
-                        <div className="search_icon">
-                            <SearchIcon id="search" />
+        <>
+            <header>
+                <nav>
+                    <div className="left">
+                        <div className="navlogo">
+                            <NavLink to="/"><img src="./Assets/img/amazon_PNG25.png" alt="App Logo" /></NavLink>
+                        </div>
+                        <div className="nav_searchbaar">
+                            <select
+                                ref={SelectRef}
+                                name='searchSelect'
+                                className='SearchSelect'
+                                defaultValue='All'>
+                                <option value='All'>All</option>
+                                {Categories &&
+                                    Categories.map((option, index) => {
+                                        return (
+                                            <option key={index} value={option}>
+                                                {option}
+                                            </option>
+                                        );
+                                    })}
+                            </select>
+                            <input ref={inputRef} type="text" name="" placeholder="Search Your Products" />
+                            <div className="search_icon">
+                                <SearchIcon id="search" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="right">
-                    <NavLink className="nav_atag" to={!userAuth.userData?.email ? "/signin" : "/account"} id="signin_tag">
-                        <div className="nav_btn">
-                            Hello, {!userAuth.userData?.email ? "Sign in" : userAuth.userData?.fullname.split(" ")[0]}
-                            <p>Account &amp; List <ArrowDropDownIcon fontSize="small" /> </p>
+                    <div className="right">
+                        <NavLink className="nav_atag" to={!userAuth.userData?.email ? "/signin" : "/account"} id="signin_tag">
+                            <div className="nav_btn">
+                                Hello, {!userAuth.userData?.email ? "Sign in" : userAuth.userData?.fullname.split(" ")[0]}
+                                <p>Account &amp; List <ArrowDropDownIcon fontSize="small" /> </p>
+                            </div>
+                        </NavLink>
+                        <div className="dropdown_box card w-25 align-items-center d-none" id="dbox">
+                            {(!userAuth.userData?.email) ? <NavLink className="signin_dbtn" to="/signin" >Sign In</NavLink> : <NavLink className="signin_dbtn" to="/" onClick={() => logoutuser()} >Sign Out</NavLink>}
                         </div>
-                    </NavLink>
-                    <div className="dropdown_box card w-25 align-items-center d-none" id="dbox">
-                        {(!userAuth.userData?.email) ? <NavLink className="signin_dbtn" to="/signin" >Sign In</NavLink> : <NavLink className="signin_dbtn" to="/" onClick={() => logoutuser()} >Sign Out</NavLink>}
+                        <a className="nav_atag" href=''>
+                            <div className="nav_btn">
+                                Returns
+                                <p>&amp; Orders</p>
+                            </div>
+                        </a>
+                        <NavLink className="nav_atag cart_btn cart_inset" to={!userAuth.userData?.email ? "/signin" : "/cart"}>
+                            <span className="cart_count">{userAuth.userData?.carts?.reduce((total, first) => (total + first.qty), 0) || 0}</span>
+                            <img src="./Assets/img/cart.png" alt="" height="34" />
+                            <span className="cart_text">Cart</span>
+                        </NavLink>
                     </div>
-                    <a className="nav_atag" href=''>
-                        <div className="nav_btn">
-                            Returns
-                            <p>&amp; Orders</p>
-                        </div>
-                    </a>
-                    <NavLink className="nav_atag cart_btn cart_inset" to={!userAuth.userData?.email ? "/signin" : "/cart"}>
-                        <span className="cart_count">{userAuth.userData?.carts?.reduce((total, first) => (total + first.qty), 0) || 0}</span>
-                        <img src="./Assets/img/cart.png" alt="" height="34" />
-                        <span className="cart_text">Cart</span>
-                    </NavLink>
-                </div>
-            </nav>
-        </header >
+                </nav>
+            </header >
+            <Outlet />
+            <Footer />
+        </>
     )
 }
 

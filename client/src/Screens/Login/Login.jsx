@@ -30,9 +30,11 @@ const Login = () => {
             (verifiedData?.error) && setErr(verifiedData.error)
 
             if (!verifiedData?.error) {
-                userAuth.login(verifiedData); //sets logedInEmail data in state of global context.
-                navigate("/", { replace: true });
+                userAuth.login(verifiedData);
+                console.log(verifiedData.userRole === 'admin' ? 'hi' : 'hello'); //sets logedInEmail data in state of global context.
                 setErr(null);
+                if (verifiedData.userRole === 'admin')  {navigate("/admin", {replace:true}); console.log('admin')}
+                else {navigate('/',{replace: true}); console.log('user');}
             }
         }
         loginUser();

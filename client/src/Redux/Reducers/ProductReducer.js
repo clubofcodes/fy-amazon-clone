@@ -6,6 +6,15 @@ export const getProductsReducers = (state = { products }, action) => {
             return { products: action.payload }
         case "FAIL_GET_PRODUCTS":
             return { error: action.payload }
+        case '':
+            const { updatedProduct } = action.payload;
+            return {
+                ...state,
+                products: state.products.map((product) =>
+                  product.id === updatedProduct.id ? updatedProduct : product
+                ),
+                loading: false,
+              };
         default: return state
     }
 }

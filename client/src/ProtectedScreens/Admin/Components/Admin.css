@@ -1,0 +1,93 @@
+/*pagination-style*/
+.pro-result {
+  margin-top: 30px;
+  align-items: center;
+}
+
+.pro-result .pagination-style:last-child {
+  text-align: right;
+}
+
+.pagination-style .pagination ul {
+  padding-left: 0;
+  margin-bottom: 0px;
+  display: flex;
+}
+
+.pagination-style .pagination ul li {
+  list-style-type: none;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.pagination-style .pagination ul li button {
+  color: #000;
+  float: left;
+  padding: 6px 12px;
+  text-decoration: none;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.pagination-style .pagination ul li button.active,
+.pagination-style .pagination ul li button:hover {
+  background-color: #13b5ea;
+  border: 1px solid #13b5ea;
+  color: #fff;
+}
+
+.pagination-style .show-result p {
+  margin-bottom: 0px;
+  color: #bbb;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: center !important;
+  padding: 8px;
+}
+
+.btnDisable,
+.btnDisable:hover {
+  background-color: darkgray !important;
+  touch-action: none !important;
+  color: #fff !important;
+  border: 1px solid darkgray !important;
+}
+
+.accordion-button::after {
+  margin-left: 0 !important;
+  color: #212529 !important;
+}
+
+.accordian-custom button {
+  background-color: #212529 !important;
+  color: #fff !important;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #212529;
+}
+
+.accordian-custom-body {
+  padding: 0 !important;
+  border-radius: 0 0 10px 10px !important;
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+.accordion-button::after{
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+.g-color , .g-color:hover{
+  color: #d2a813 !important;
+}

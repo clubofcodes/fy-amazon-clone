@@ -13,6 +13,15 @@ import { AuthProvider } from './Utils/Context/useAuthentication';
 import { ProtectComponent } from "./Utils/ProtectComponent";
 import { ProtectCartComponent } from "./Utils/ProtectCartComponent";
 
+/** Admin panel */
+import AdminDashboard from "./ProtectedScreens/Admin/Dashboard/AdminDashboard";
+import Sidebar from './ProtectedScreens/Admin/Components/Drawer/Sidebar';
+import AdminProfile from './ProtectedScreens/Admin/AdminProfile';
+import UserList from "./ProtectedScreens/Admin/Users/UserList";
+import ProductList from "./ProtectedScreens/Admin/Products/ProductList";
+import AddProduct from "./ProtectedScreens/Admin/Products/AddProduct";
+
+
 function App() {
   return (
     <div className="h-100">
@@ -37,6 +46,14 @@ function App() {
             </ProtectCartComponent>
           </>} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/admin" element={<Sidebar />} >
+            <Route index element={<AdminDashboard />} />
+            <Route index path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route index path="/admin/profile" element={<AdminProfile />} />
+            <Route index path="/admin/users" element={<UserList />} />
+            <Route index path="/admin/products" element={<ProductList />} />
+            <Route index path="/admin/addproduct" element={<AddProduct />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </div>
