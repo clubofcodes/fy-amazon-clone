@@ -16,8 +16,8 @@ app.use(cookieParser(""));
 app.use(cors());
 app.use("/api", router);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port number ${process.env.PORT}`);
+app.listen(process.env.PORT || 3575, () => {
+    console.log(`Server is running on port number ${process.env.PORT || 3575}`);
 });
 
 DefaultData();
