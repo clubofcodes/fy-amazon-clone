@@ -105,8 +105,7 @@ const Navbar = () => {
                     </div>
                 </nav>
             </header >
-            <Outlet />
-            <Footer />
+            {/* <Outlet /> */}
         </>
     )
 }

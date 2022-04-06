@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "../Common.css";
 import { Formik } from "formik";
 import { useAuthentication } from "../../Utils/Context/useAuthentication";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../Redux/Users/UserAction";
 
 const Login = () => {
 
@@ -16,6 +18,9 @@ const Login = () => {
     const navigate = useNavigate();
     //Custom hook to store logedIn user email to context.
     const userAuth = useAuthentication();
+
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const loginUser = async () => {
@@ -37,7 +42,7 @@ const Login = () => {
                 else {navigate('/',{replace: true}); console.log('user');}
             }
         }
-        loginUser();
+        // loginUser();
 
     }, [formData]);
 
@@ -84,8 +89,8 @@ const Login = () => {
                                 return errors;
                             }}
                             onSubmit={(values, { setSubmitting }) => {
-                                setFormData({ ...formData, ...values });
-
+                                // setFormData({ ...formData, ...values });
+                                dispatch(loginUser(values, navigate));
                                 setTimeout(() => {
                                     // alert(JSON.stringify(values, null, 2));
                                     setSubmitting(false);

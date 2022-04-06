@@ -2,7 +2,7 @@ import { Banner } from './Banner/Banner';
 import './Home.css';
 import { ProductSlider } from './Slider/ProductSlider';
 // import { products, products2, products3 } from "../../Assets/files/productData";
-import { getProducts } from "../../Redux/Actions/Action";
+import { getProducts } from "../../Redux/Products/Action";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from 'react';
 

@@ -20,6 +20,7 @@ import AdminProfile from './ProtectedScreens/Admin/AdminProfile';
 import UserList from "./ProtectedScreens/Admin/Users/UserList";
 import ProductList from "./ProtectedScreens/Admin/Products/ProductList";
 import AddProduct from "./ProtectedScreens/Admin/Products/AddProduct";
+import UpdateUser from "./ProtectedScreens/Admin/Users/UpdateUser";
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
             <Route index path="/admin/users" element={<UserList />} />
             <Route index path="/admin/products" element={<ProductList />} />
             <Route index path="/admin/addproduct" element={<AddProduct />} />
+            <Route index path="/admin/edituser" element={<UpdateUser />} />
           </Route>
         </Routes>
       </AuthProvider>

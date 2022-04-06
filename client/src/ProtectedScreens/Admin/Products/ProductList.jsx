@@ -4,7 +4,7 @@ import { Table, Container, Row, Col, Button } from "react-bootstrap";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import Pagination from "../Components/Pagination";
 import AddProduct from "./AddProduct";
-import { getProducts } from "../../../Redux/Actions/Action";
+import { deleteProduct, getProducts } from "../../../Redux/Products/Action";
 
 const ProductList = () => {
 
@@ -25,7 +25,7 @@ const ProductList = () => {
   }, []);
   const deleteHandler = (id, category) => {
     if (window.confirm("Are you sure? This is an IRREVERSIBLE action!")) {
-      // dispatch(deleteProduct(id, category));
+      dispatch(deleteProduct(id));
     }
   };
   const onChangePage = (pageOfItems) => {
@@ -93,7 +93,7 @@ const ProductList = () => {
                       <i
                         className="bi bi-trash text-danger fs-5"
                         onClick={() =>
-                          deleteHandler(product.id, product.category)
+                          deleteHandler(product._id)
                         }
                       ></i>
                     </div>

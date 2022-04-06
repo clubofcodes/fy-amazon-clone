@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table, Container, Row, Col, Button } from "react-bootstrap";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import Loading from "../../../Components/Loading";
 import Message from "../../../Components/Message";
 import Pagination from "../Components/Pagination";
-import Adduser from "./AddUser";
+import Adduser from "./UpdateUser";
+import { getUsers } from "../../../Redux/Users/UserAction";
 
 const UserList = () => {
-  // const userList = useSelector((state) => state.userList);
-  // const { users, loading, error } = userList;
+  const userData = useSelector((state) => state.userData);
+  const { users, loading, error } = userData;
   const [filterData, setFilterData] = useState([]);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const outlet = useOutletContext()
 
   useEffect(() => {
     outlet.selectCurTab('/admin/users');
-    // if (users.length === 0) dispatch(getUsers());
+    if (users.length === 0) dispatch(getUsers());
     // eslint-disable-next-line
   }, []);
 
@@ -32,6 +34,7 @@ const UserList = () => {
   };
   return (
     <Container>
+      {console.log("users", users)}
       <Row className="m-2">
         <Col>
           <h3>Users Data</h3>
@@ -42,9 +45,8 @@ const UserList = () => {
           <Table bordered hover responsive className="disp-product bg-white">
             <thead>
               <tr className="text-center">
-                <th>Sr No.</th>
                 <th>ID</th>
-                <th>Username</th>
+                <th>Full Name</th>
                 <th>Email</th>
                 <th className="text-center">Admin</th>
                 <th className="text-center" style={{ minWidth: "100px" }}>
@@ -53,37 +55,25 @@ const UserList = () => {
               </tr>
             </thead>
             <tbody>
-              {/* {filterData.map((user, index) => (
-                <tr key={user.id} className="align-middle">
+              {users.length>=0 && users.map((user, index) => (
+                <tr key={index} className="align-middle">
                   <td width='4%'>{index + 1}</td>
-                  <td width="4%">{user.id}</td>
-                  <td width="20%">{user.username}</td>
+                  <td width="20%">{user.fullname}</td>
                   <td width="30%">
                     {user.email.slice(0, 36)}
                     <br />
                     {user.email.slice(36)}
                   </td>
                   <td className="text-center" width="4%">
-                    {user.email.includes("admin") ||
-                      user.username.includes("admin") ? (
-                      <i
-                        className="fa fa-check text-success fs-5"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <i
-                        className="fa fa-close text-danger fs-5"
-                        aria-hidden="true"
-                      />
+                    {user.userRole.includes("admin") ? (
+                      <i class="bi bi-person-check-fill"></i>
+                      ) : (
+                      <i class="bi bi-person-check"></i>
                     )}
                   </td>
                   <td width="10%">
                     <div className="d-flex justify-content-evenly align-items-center actions">
-                      <Adduser
-                        Btn={<i className="bi bi-pencil-square fs-5"></i>}
-                        edit={true}
-                        user={user}
-                      />
+                    <i className="bi bi-pencil-square fs-5" onClick={()=>navigate('/admin/edituser',{state:{edit:true, data:user}})}></i>
                       <i
                         className="bi bi-trash text-danger fs-5"
                         onClick={() => deleteHandler(user.id)}
@@ -91,7 +81,7 @@ const UserList = () => {
                     </div>
                   </td>
                 </tr>
-              ))} */}
+              ))}
             </tbody>
           </Table>
           <div className="text-center d-flex justify-content-center">
