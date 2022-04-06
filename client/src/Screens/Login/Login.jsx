@@ -46,7 +46,6 @@ const Login = () => {
                 <div className="app_logo">
                     <NavLink to="/"><img src="./Assets/img/amazon_black.png" alt="App Logo" width="150" /></NavLink>
                 </div>
-
                 {(err && (err === "Invalid Credentials" || err === "User doesn't exist!!")) &&
                     <div className="card w-25 mt-1 err_alert_container px-1 mb-2">
                         <div className="card-body">
@@ -55,7 +54,7 @@ const Login = () => {
                                     <img src="./Assets/img/err_alert.png" alt="Error Alert" width="30" />
                                 </div>
                                 <div className="col-sm-10 px-0">
-                                    <h4 className="err_alert_heading mb-1">{!isNaN(formData.email) ? "Incorrect phone number" : ((err === "Invalid Credentials" || err === "User doesn't exist!!")) && "There was a problem"}</h4>
+                                    <h4 className="err_alert_heading mb-1">{((err === "Invalid Credentials" || err === "User doesn't exist!!")) ? "There was a problem" : !isNaN(formData.email) && "Incorrect phone number"}</h4>
                                     <p className="alert_content mb-0">{err === "Invalid Credentials" ? "Your password is incorrect." : isNaN(formData.email) ? "We cannot find an account with that email address" : "We cannot find an account with that mobile number"}</p>
                                 </div>
                             </div>

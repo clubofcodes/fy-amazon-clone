@@ -167,7 +167,7 @@ export const HomeMainComp = () => {
 
             <div className="row mx-0 justify-content-evenly mb-3">
                 <div className="col-sm-9 px-2">
-                    <ProductSlider pTitle="Today’s Deals" pLinkText="See all deals" pData={products}  />
+                    <ProductSlider pTitle="Today’s Deals" pLinkText="See all deals" pData={products} />
                 </div>
                 <div className="col-sm-3 py-2 d-flex align-self-stretch px-3">
                     <div className="card">

@@ -52,7 +52,7 @@ const Signup = () => {
 
     return (
         <section>
-            <div className="d-flex flex-column align-items-center">
+            <div className="d-flex flex-column align-items-center pb-3">
 
                 <div className="app_logo">
                     <NavLink to="/"><img src="./Assets/img/amazon_black.png" alt="App Logo" width="150" /></NavLink>
@@ -87,7 +87,7 @@ const Signup = () => {
                         </div>
                     </div>}
 
-                <div className="card w-25 mt-3">
+                <div className="card w-25 mt-2">
                     <div className="card-body sign_form pt-2">
                         <Formik
                             initialValues={{ fullname: '', mNumber: '', email: '', password: '' }}

@@ -94,7 +94,7 @@ const ProductView = () => {
                         <Divider />
                         <p className="mrp">M.R.P. : <del>₹{StoredProductData.price.mrp}</del></p>
                         <p>Deal of the Day : <span style={{ color: "#B12704" }}>₹{StoredProductData.price.cost}.00</span></p>
-                        <p>You save : <span style={{ color: "#B12704" }}> ₹{StoredProductData.price.mrp - StoredProductData.price.cost} ({StoredProductData.price.discount} </span></p>
+                        <p>You save : <span style={{ color: "#B12704" }}> ₹{StoredProductData.price.mrp - StoredProductData.price.cost} ({StoredProductData.price.discount}) </span></p>
                         <div className="discount_box">
                             <h5 >Discount : <span style={{ color: "#111" }}>{StoredProductData.discount}</span> </h5>
                             <h4>FREE Delivery : <span style={{ color: "#111", fontWeight: "600" }}>Apr 8 - 22</span> Details</h4>

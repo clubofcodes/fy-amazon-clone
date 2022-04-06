@@ -34,7 +34,12 @@ const userSchema = mongoose.Schema({
             }
         }
     ],
-    carts: Array
+    carts: Array,
+    userRole: String,
+    activeUser: {
+        type: Boolean,
+        default: false
+    },
 });
 
 const Users = mongoose.model("User", userSchema);
