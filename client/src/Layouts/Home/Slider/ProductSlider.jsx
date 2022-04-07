@@ -5,7 +5,7 @@ import "./ProductSlider.css";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-export const ProductSlider = ({ pTitle, pLinkText, pData }) => {
+export const ProductSlider = ({ pTitle, pLinkText, pData, startlimit, endlimit }) => {
 
     const [isHover, setIsHover] = useState(false);
 
@@ -50,7 +50,7 @@ export const ProductSlider = ({ pTitle, pLinkText, pData }) => {
                 containerClass="carousel-container"
             >
                 {
-                    pData.map((product, index) => (
+                    pData.slice(startlimit, endlimit + 1).map((product, index) => (
                         <NavLink className="products_items pb-4 text-decoration-none" to={`/product/${product.title.longTitle}`} key={index} >
                             <div className="product_img">
                                 <img src={product.url} alt={product.id} />

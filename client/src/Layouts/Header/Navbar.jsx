@@ -6,6 +6,9 @@ import { resizeSelect } from '../../Utils/SelectResizer';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthentication } from '../../Utils/Context/useAuthentication';
 import Footer from '../Footer/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from '../../Redux/Products/Action';
+import { getUsers, getValidateUser, logout } from '../../Redux/Users/UserAction';
 
 const Navbar = () => {
 
@@ -19,6 +22,11 @@ const Navbar = () => {
     //routing hook to go to particular path.
     const navigate = useNavigate();
 
+    const userData = useSelector((state) => state.userData);
+    const { loading, error, user } = userData;
+
+    const dispatch = useDispatch();
+
     useEffect(() => {
         // resize on initial load
         resizeSelect(SelectRef.current);
@@ -31,7 +39,7 @@ const Navbar = () => {
 
     //For user logout
     const logoutuser = async () => {
-        const logoutResponse = await fetch("/logout", {
+        const logoutResponse = await fetch("http://localhost:3575/api/logout", {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -46,6 +54,7 @@ const Navbar = () => {
             const error = new Error(logoutResponse.error);
             throw error;
         } else {
+            console.log("fsddb");
             userAuth.logout();
             navigate("/", { replace: true });
         }
@@ -82,14 +91,14 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="right">
-                        <NavLink className="nav_atag" to={!userAuth.userData?.email ? "/signin" : "/account"} id="signin_tag">
+                        <NavLink className="nav_atag" to={!user?.email ? "/signin" : "/account"} id="signin_tag">
                             <div className="nav_btn">
-                                Hello, {!userAuth.userData?.email ? "Sign in" : userAuth.userData?.fullname.split(" ")[0]}
+                                Hello, {!user?.email ? "Sign in" : user?.fullname.split(" ")[0]}
                                 <p>Account &amp; List <ArrowDropDownIcon fontSize="small" /> </p>
                             </div>
                         </NavLink>
                         <div className="dropdown_box card w-25 align-items-center d-none" id="dbox">
-                            {(!userAuth.userData?.email) ? <NavLink className="signin_dbtn" to="/signin" >Sign In</NavLink> : <NavLink className="signin_dbtn" to="/" onClick={() => logoutuser()} >Sign Out</NavLink>}
+                            {(!user?.email) ? <NavLink className="signin_dbtn" to="/signin" >Sign In</NavLink> : <NavLink className="signin_dbtn" to="/" onClick={() => logoutuser()} >Sign Out</NavLink>}
                         </div>
                         <a className="nav_atag" href=''>
                             <div className="nav_btn">
@@ -97,8 +106,8 @@ const Navbar = () => {
                                 <p>&amp; Orders</p>
                             </div>
                         </a>
-                        <NavLink className="nav_atag cart_btn cart_inset" to={!userAuth.userData?.email ? "/signin" : "/cart"}>
-                            <span className="cart_count">{userAuth.userData?.carts?.reduce((total, first) => (total + first.qty), 0) || 0}</span>
+                        <NavLink className="nav_atag cart_btn cart_inset" to={!user?.email ? "/signin" : "/cart"}>
+                            <span className="cart_count">{user?.carts?.reduce((total, first) => (total + first.qty), 0) || 0}</span>
                             <img src="./Assets/img/cart.png" alt="" height="34" />
                             <span className="cart_text">Cart</span>
                         </NavLink>

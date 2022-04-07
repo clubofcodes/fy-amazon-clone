@@ -57,11 +57,11 @@ const AddProduct = () => {
     data.price.cost = data.price.mrp - (data.price.mrp * data.price.discount / 100);
     data.detailUrl = data.url;
     if (location?.state?.edit) {
-      dispatch(updateProduct(location.state.data._id, data));
+      dispatch(updateProduct(location.state.data._id, data, navigate));
     } else {
       dispatch(addProduct(data));
     }
-    reset();
+    // reset();
   };
 
   return (

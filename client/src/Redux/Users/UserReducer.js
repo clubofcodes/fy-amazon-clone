@@ -64,7 +64,7 @@ export const userReducer = (
       // }
       return {
         ...state,
-        authUser: action.payload.user,
+        user: action.payload,
         loading: false,
       };
     case UPDATE_USER_SUCCESS:
@@ -88,12 +88,10 @@ export const userReducer = (
         users: state.users.filter((user) => user.id !== action.payload),
         loading: false,
       };
-    case LOGOUT:
-      localStorage.removeItem("user");
-      localStorage.removeItem("cart");
+    case "LOGOUT_USER_SUCCESS":
       return {
         ...state,
-        authUser: null,
+        user: null,
       };
     case GET_ALL_USERS_FAIL:
     case GET_SINGLE_USER_FAIL:

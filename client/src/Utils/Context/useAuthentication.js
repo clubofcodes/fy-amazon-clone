@@ -1,9 +1,13 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getValidateUser } from '../../Redux/Users/UserAction';
 //Creates new context & will store any type of value.
 const AuthContext = createContext(null);
 
 // This will provides function/properties to all children component.
 export const AuthProvider = ({ children }) => {
+
+  const dispatch  = useDispatch();
 
   const getValidUserData = async () => {
     const validUserResponse = await fetch("/validuser", {
@@ -24,11 +28,14 @@ export const AuthProvider = ({ children }) => {
   // Sets userData state with parameter values when function is called.
   const login = userValues => setUserData({ ...userValues });
   // Sets userData to null when anyone call logout function.
-  const logout = () => setUserData(null);
+  const logout = () => {
+    setUserData(null);
+    dispatch(getValidateUser());
+  }
 
-  useEffect(() => {
-    getValidUserData();
-  }, []);
+  // useEffect(() => {
+  //   getValidUserData();
+  // }, []);
 
   return (
     //Provides value objects to all children component.

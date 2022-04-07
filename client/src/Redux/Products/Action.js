@@ -41,10 +41,33 @@ export const getProducts = () => async (dispatch) => {
   }
 }
 
+// Get a Single Product
+export const getProductDetails = (id) => async (dispatch) => {
+  dispatch({
+    type: GET_PRODUCT_DETAILS_REQUEST,
+  });
+
+  try {
+    const res = await axiosbash.get(`/getproduct/${id}`);
+    console.log(res.data);
+
+    dispatch({
+      type: GET_PRODUCT_DETAILS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (err) {
+    // console.log(err);
+    dispatch({
+      type: GET_PRODUCT_DETAILS_FAIL,
+      payload: err.response ? err.response.data : err.message,
+    });
+  }
+};
+
 // Add a Product
 export const addProduct =
-  (formData, navigate = null) =>{
-    console.log("formdata   ",formData);
+  (formData, navigate = null) => {
+    console.log("formdata   ", formData);
     return async (dispatch) => {
       dispatch({
         type: 'ADD_PRODUCT_REQUEST',
@@ -64,7 +87,7 @@ export const addProduct =
           type: 'ADD_PRODUCT_SUCCESS',
           payload: { category: formData.title.shortTitle, product: res.data },
         });
-        if (navigate) navigate("/products");
+        if (navigate) navigate("/admin/products");
       } catch (err) {
         dispatch({
           type: 'ADD_PRODUCT_FAIL',
@@ -74,9 +97,8 @@ export const addProduct =
     };
   }
 
-
-export const updateProduct = (id, formData) => async (dispatch) => {
-  console.log("formdata product  ",formData);
+export const updateProduct = (id, formData, navigate = null) => async (dispatch) => {
+  console.log("formdata product  ", formData);
   try {
     const config = {
       headers: {
@@ -86,11 +108,12 @@ export const updateProduct = (id, formData) => async (dispatch) => {
 
     const res = await axiosbash.patch(`/updateproduct/${id}`, formData, config);
 
-    console.log("responce update product ",res.data);
+    console.log("responce update product ", res.data);
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,
       payload: { category: formData.category, updatedProduct: res.data },
     });
+    if (navigate) navigate("/admin/products");
   } catch (err) {
     console.log(err);
     dispatch({
@@ -99,7 +122,6 @@ export const updateProduct = (id, formData) => async (dispatch) => {
     });
   }
 };
-
 
 // Delete a Product
 export const deleteProduct = (id) => async (dispatch) => {

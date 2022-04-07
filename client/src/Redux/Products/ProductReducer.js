@@ -1,3 +1,5 @@
+import { GET_PRODUCT_DETAILS_FAIL, GET_PRODUCT_DETAILS_REQUEST, GET_PRODUCT_DETAILS_SUCCESS } from "./ProductTypes";
+
 const products = [];
 
 export const getProductsReducers = (state = { products }, action) => {
@@ -31,3 +33,29 @@ export const getProductsReducers = (state = { products }, action) => {
         default: return state
     }
 }
+
+// Single Product Details
+export const productDetailsReducer = (state = { product: null }, action) => {
+    switch (action.type) {
+      case GET_PRODUCT_DETAILS_REQUEST:
+        return {
+          ...state,
+          loading: true,
+        };
+  
+      case GET_PRODUCT_DETAILS_SUCCESS:
+        return {
+          ...state,
+          product: action.payload,
+          loading: false,
+        };
+      case GET_PRODUCT_DETAILS_FAIL:
+        return {
+          ...state,
+          error: action.payload,
+          loading: false,
+        };
+      default:
+        return state;
+    }
+  };

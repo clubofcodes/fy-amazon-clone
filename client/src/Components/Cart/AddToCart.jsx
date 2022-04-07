@@ -6,42 +6,52 @@ import BuyBox from "./Parts/BuyBox";
 import { useEffect, useState } from "react";
 import EmptyCart from "./Parts/EmptyCart";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getValidateUser } from "../../Redux/Users/UserAction";
 
 const AddToCart = () => {
     var totalItem = 0;
 
     const [StoredCartData, setCartData] = useState([]);
     //New state for loading
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     //for navigating to particular component.
     const navigate = useNavigate();
 
-    const getCartData = async () => {
-        const getCartDataRes = await fetch("/cartdetails", {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            credentials: "include"
-        });
+    const userData = useSelector((state) => state.userData);
+    const { loading, error, user } = userData;
 
-        const CartData = await getCartDataRes.json();
-        (getCartDataRes.status !== 200) ? console.log("No such data available") : setCartData(CartData.carts);
-        (CartData?.carts.length && getCartDataRes.status !== 200) ? setIsLoading(true) : setIsLoading(false);
-    };
+    // const getCartData = async () => {
+    //     const getCartDataRes = await fetch("/cartdetails", {
+    //         method: "GET",
+    //         headers: {
+    //             Accept: "application/json",
+    //             "Content-Type": "application/json"
+    //         },
+    //         credentials: "include"
+    //     });
 
-    useEffect(() => {
-        getCartData();
-    }, []);
+    //     const CartData = await getCartDataRes.json();
+    //     (getCartDataRes.status !== 200) ? console.log("No such data available") : setCartData(CartData.carts);
+    //     (CartData?.carts.length && getCartDataRes.status !== 200) ? setIsLoading(true) : setIsLoading(false);
+    // };
+
+    // useEffect(() => {
+    //     // getCartData();
+    // }, []);
+
+    const removeCartItemLoader = (removed) => {
+        window.scrollTo(0, 0);
+        setIsLoading(removed);
+    }
 
     return (
         <>
-            {isLoading ?
+            {loading || isLoading ?
                 <div className="loading d-flex flex-column justify-content-center align-items-center h-100 p-5">
                     <CircularProgress />
                     <h2>Loading....</h2>
-                </div> : StoredCartData.length ?
+                </div> : user?.carts.length > 0 ?
                     <div className="buynow_section">
                         <div className="buynow_container">
                             <div className="left_buy">
@@ -49,7 +59,7 @@ const AddToCart = () => {
                                 <p>Select all items</p>
                                 <span className="leftbuyprice">Price</span>
                                 <Divider />
-                                {StoredCartData.map((cart, index) => (
+                                {user?.carts.map((cart, index) => (
                                     <>
                                         <div className="item_containert" key={index}>
                                             <img className="pe-auto" src={cart.detailUrl} alt="Single Product" onClick={() => navigate(`/product/${cart.title.longTitle}`)} />
@@ -60,7 +70,7 @@ const AddToCart = () => {
                                                 <p className="unusuall">Usually dispatched in 8 days.</p>
                                                 <p>Eligible for FREE Shipping</p>
                                                 <img src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png" alt="logo" />
-                                                <DropDown deleteData={cart.id} updateCartData={getCartData} qty={cart.qty} />
+                                                <DropDown deleteData={cart.id} toggle={removeCartItemLoader} qty={cart.qty} />
                                             </div>
                                             <h3 className="item_price">₹{cart.price.cost}.00</h3>
                                             <h1 hidden>{totalItem += cart.qty}</h1>
@@ -68,9 +78,9 @@ const AddToCart = () => {
                                         <Divider />
                                     </>
                                 ))}
-                                <SubTotal cartItem={StoredCartData} qty={totalItem} />
+                                <SubTotal cartItem={user?.carts} qty={totalItem} />
                             </div>
-                            <BuyBox cartItem={StoredCartData} qty={totalItem} />
+                            <BuyBox cartItem={user?.carts} qty={totalItem} />
                         </div>
                     </div> : <EmptyCart />}
         </>

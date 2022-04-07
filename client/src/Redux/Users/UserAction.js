@@ -73,73 +73,73 @@ export const getSingleUser = (id) => async (dispatch) => {
 //Add User
 export const addUser =
   ({ formData, navigate, shouldNavigate }) =>
-  async (dispatch) => {
-    console.log("adduser ",formData);
-    const data = {
-      email: formData.email,
-      fullname: formData.fullname,
-      password: formData.password,
-      mNumber: formData.mNumber,
+    async (dispatch) => {
+      console.log("adduser ", formData);
+      const data = {
+        email: formData.email,
+        fullname: formData.fullname,
+        password: formData.password,
+        mNumber: formData.mNumber,
+      };
+      // const data = {
+      //   email: formData.email,
+      //   username: formData.username,
+      //   password: formData.password,
+      //   name: {
+      //     firstname: formData.firstname,
+      //     lastname: formData.lastname,
+      //   },
+      //   address: {
+      //     city: formData.city,
+      //     street: formData.street,
+      //     number: formData.number,
+      //     zipcode: formData.zipcode,
+      //     geolocation: {
+      //       lat: formData.geolocation.coordinates
+      //         ? formData.geolocation.coordinates.lat
+      //         : "22.2323345344",
+      //       long: formData.geolocation.coordinates
+      //         ? formData.geolocation.coordinates.lng
+      //         : "22.435355345",
+      //     },
+      //   },
+      //   phone: formData.phone,
+      // };
+      console.log("userAction insert", data);
+      // dispatch({
+      //   type: ADD_USER_REQUEST,
+      // });
+
+      // try {
+      //   const config = {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   };
+      //   const res = await axiosbash.post("/users", data, config);
+      //   console.log({ ...data, id: res.data.id });
+
+      //   dispatch({
+      //     type: ADD_USER_SUCCESS,
+      //     payload: { ...data, id: res.data.id },
+      //   });
+
+      //   if (shouldNavigate) navigate("/login");
+      // } catch (err) {
+      //   dispatch({
+      //     type: ADD_USER_FAIL,
+      //     payload: err.response ? err.response.data : err.message,
+      //   });
+      //   setTimeout(() => {
+      //     dispatch(clearError());
+      //   }, 5000);
+      // }
     };
-    // const data = {
-    //   email: formData.email,
-    //   username: formData.username,
-    //   password: formData.password,
-    //   name: {
-    //     firstname: formData.firstname,
-    //     lastname: formData.lastname,
-    //   },
-    //   address: {
-    //     city: formData.city,
-    //     street: formData.street,
-    //     number: formData.number,
-    //     zipcode: formData.zipcode,
-    //     geolocation: {
-    //       lat: formData.geolocation.coordinates
-    //         ? formData.geolocation.coordinates.lat
-    //         : "22.2323345344",
-    //       long: formData.geolocation.coordinates
-    //         ? formData.geolocation.coordinates.lng
-    //         : "22.435355345",
-    //     },
-    //   },
-    //   phone: formData.phone,
-    // };
-    console.log("userAction insert",data);
-    // dispatch({
-    //   type: ADD_USER_REQUEST,
-    // });
-
-    // try {
-    //   const config = {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   };
-    //   const res = await axiosbash.post("/users", data, config);
-    //   console.log({ ...data, id: res.data.id });
-
-    //   dispatch({
-    //     type: ADD_USER_SUCCESS,
-    //     payload: { ...data, id: res.data.id },
-    //   });
-
-    //   if (shouldNavigate) navigate("/login");
-    // } catch (err) {
-    //   dispatch({
-    //     type: ADD_USER_FAIL,
-    //     payload: err.response ? err.response.data : err.message,
-    //   });
-    //   setTimeout(() => {
-    //     dispatch(clearError());
-    //   }, 5000);
-    // }
-  };
 
 // Login User
-export const loginUser = (formData, navigate) => async (dispatch, getState) => {
+export const loginUser = (formData, navigate = null) => async (dispatch) => {
   const data = {
-    username: formData.username,
+    email: formData.email,
     password: formData.password,
   };
 
@@ -148,39 +148,27 @@ export const loginUser = (formData, navigate) => async (dispatch, getState) => {
   });
 
   try {
+
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const res = await axiosbash.post("/auth/login", data, config);
-    console.log(res.data);
 
-    const users = getState().userList.users;
-    const loggedinUser = users.find(
-      (item) =>
-        item.username === data.username && item.password === data.password
-    );
+    const logedInUserRes = await axiosbash.patch("/login", data, config);
+    console.log(logedInUserRes);
 
-    const isAdmin =
-      loggedinUser.username.includes("admin")
-    console.log(isAdmin);
+    const isAdmin = logedInUserRes?.data.userRole.toLowerCase().includes("admin");
 
-    loggedinUser.isAdmin = isAdmin;
+    dispatch({
+      type: LOGIN_USER_SUCCESS,
+      payload: logedInUserRes.data
+    });
 
-    if (loggedinUser) {
-      dispatch({
-        type: LOGIN_USER_SUCCESS,
-        payload: { user: loggedinUser, remember: formData.remember },
-      });
-      if (loggedinUser.isAdmin) {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
-    } else {
-      throw new Error("User not found");
-    }
+    isAdmin ? navigate("/admin") : navigate("/")
+
+    // dispatch(getValidateUser());
+
   } catch (err) {
     dispatch({
       type: LOGIN_USER_FAIL,
@@ -192,48 +180,88 @@ export const loginUser = (formData, navigate) => async (dispatch, getState) => {
   }
 };
 
+export const getValidateUser = () => async (dispatch) => {
+  console.log("Called");
+
+  // const validUserResponse = await fetch("/validuser", {
+  //   method: "GET",
+  //   headers: {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json"
+  //   },
+  //   credentials: "include"
+  // });
+
+  try {
+    const config = {
+      withCredentials: true,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      },
+    };
+
+    const validUserResponse = await axiosbash.get("/validuser", config);
+
+    console.log("Data: ", validUserResponse?.data);
+    dispatch({
+      type: LOGIN_USER_SUCCESS,
+      payload: validUserResponse.data
+    });
+  } catch (err) {
+    dispatch({
+      type: LOGIN_USER_FAIL,
+      payload: err.response ? err.response.data : err.message,
+    });
+    setTimeout(() => {
+      dispatch(clearError());
+    }, 5000);
+  }
+  // (validUserResponse.status !== 200) ? console.log("First login") : setUserData(validUserData);
+}
+
 // Update User
 export const updateUser =
-  (id, formData ) =>
-  async (dispatch) => {
-    console.log("formdata update user  ", formData, id);
-    const data = {
-      email: formData.email,
-      fullname: formData.fullname,
-      password: formData.password,
-      phone: formData.mNumber,
-      userRole: formData.userRole
-    };
-    dispatch({
-      type: UPDATE_USER_REQUEST,
-    });
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
+  (id, formData) =>
+    async (dispatch) => {
+      console.log("formdata update user  ", formData, id);
+      const data = {
+        email: formData.email,
+        fullname: formData.fullname,
+        password: formData.password,
+        phone: formData.mNumber,
+        userRole: formData.userRole
       };
-      const res = await axiosbash.patch(`/updateuser/${id}`, data, config);
-
-      const isAdmin =
-        data.userRole.includes("admin")
-
-      data.isAdmin = isAdmin;
-
       dispatch({
-        type: UPDATE_USER_SUCCESS,
-        payload: { ...data, id: res.data.id },
+        type: UPDATE_USER_REQUEST,
       });
-    } catch (err) {
-      dispatch({
-        type: UPDATE_USER_FAIL,
-        payload: err.response ? err.response.data : err.message,
-      });
-      setTimeout(() => {
-        dispatch(clearError());
-      }, 5000);
-    }
-  };
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const res = await axiosbash.patch(`/updateuser/${id}`, data, config);
+
+        const isAdmin =
+          data.userRole.includes("admin")
+
+        data.isAdmin = isAdmin;
+
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+          payload: { ...data, id: res.data.id },
+        });
+      } catch (err) {
+        dispatch({
+          type: UPDATE_USER_FAIL,
+          payload: err.response ? err.response.data : err.message,
+        });
+        setTimeout(() => {
+          dispatch(clearError());
+        }, 5000);
+      }
+    };
 
 // Delete User
 export const deleteUser = (id) => async (dispatch) => {
@@ -261,10 +289,36 @@ export const deleteUser = (id) => async (dispatch) => {
 };
 
 // LOGOUT User
-export const logout = () => {
-  return {
-    type: LOGOUT,
-  };
+export const logout = (navigate) => async (dispatch) => {
+
+  try {
+    const config = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    const x = await axiosbash.get("/logout", config);
+    console.log(x);
+
+    if (navigate) navigate("/", { replace: true });
+
+    dispatch({
+      type: "LOGOUT_USER_SUCCESS"
+    });
+
+  } catch (err) {
+
+    dispatch({
+      type: "LOGOUT_USER_FAIL",
+      payload: err.response && err.message,
+    });
+    setTimeout(() => {
+      dispatch(clearError());
+    }, 5000);
+  }
 };
 
 const clearError = () => {

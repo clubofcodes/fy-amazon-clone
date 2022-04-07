@@ -6,7 +6,6 @@ import Loading from "../../../Components/Loading";
 import Message from "../../../Components/Message";
 import Pagination from "../Components/Pagination";
 import Adduser from "./UpdateUser";
-import { getUsers } from "../../../Redux/Users/UserAction";
 
 const UserList = () => {
   const userData = useSelector((state) => state.userData);
@@ -19,7 +18,6 @@ const UserList = () => {
 
   useEffect(() => {
     outlet.selectCurTab('/admin/users');
-    if (users.length === 0) dispatch(getUsers());
     // eslint-disable-next-line
   }, []);
 

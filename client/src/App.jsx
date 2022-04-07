@@ -21,9 +21,22 @@ import UserList from "./ProtectedScreens/Admin/Users/UserList";
 import ProductList from "./ProtectedScreens/Admin/Products/ProductList";
 import AddProduct from "./ProtectedScreens/Admin/Products/AddProduct";
 import UpdateUser from "./ProtectedScreens/Admin/Users/UpdateUser";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getUsers, getValidateUser } from "./Redux/Users/UserAction";
+import { getProducts } from "./Redux/Products/Action";
 
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+    dispatch(getUsers());
+    // dispatch(getValidateUser());
+  }, [dispatch]);
+
   return (
     <div className="h-100">
       <AuthProvider>

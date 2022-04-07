@@ -2,10 +2,7 @@ import { Banner } from './Banner/Banner';
 import './Home.css';
 import { ProductSlider } from './Slider/ProductSlider';
 // import { products, products2, products3 } from "../../Assets/files/productData";
-import { getProducts } from "../../Redux/Products/Action";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react';
-
+import { useSelector } from "react-redux";
 
 export const HomeMainComp = () => {
 
@@ -27,13 +24,6 @@ export const HomeMainComp = () => {
     const { products } = useSelector(state => state.getproductsdata);
 
     // console.log("Home: ", products);
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getProducts());
-    }, [dispatch])
-
 
     return (
         <div className="home_section">
@@ -167,7 +157,7 @@ export const HomeMainComp = () => {
 
             <div className="row mx-0 justify-content-evenly mb-3">
                 <div className="col-sm-9 px-2">
-                    <ProductSlider pTitle="Today’s Deals" pLinkText="See all deals" pData={products}  />
+                    <ProductSlider pTitle="Today’s Deals" pLinkText="See all deals" pData={products} startlimit={0} endlimit={products.length > 9 ? 9 : products.length} />
                 </div>
                 <div className="col-sm-3 py-2 d-flex align-self-stretch px-3">
                     <div className="card">
@@ -188,6 +178,8 @@ export const HomeMainComp = () => {
                 pTitle="Up to 50% off on electronic products | Small businesses"
                 pLinkText="See all offers"
                 pData={products}
+                startlimit={products.length > 10 ? 10 : 0}
+                endlimit={products.length > 10 ? 20 : products.length}
             />
 
             <p className="mt-4"></p>
@@ -195,6 +187,8 @@ export const HomeMainComp = () => {
                 pTitle="Up to 50% off on kitchen &amp; dining products | Small businesses"
                 pLinkText="See all offers"
                 pData={products}
+                startlimit={products.length > 19 ? 19 : 0}
+                endlimit={products.length > 19 ? 30 : products.length}
             />
         </div>
     )

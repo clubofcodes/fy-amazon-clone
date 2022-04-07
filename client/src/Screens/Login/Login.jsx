@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "../Common.css";
 import { Formik } from "formik";
 import { useAuthentication } from "../../Utils/Context/useAuthentication";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Redux/Users/UserAction";
 
 const Login = () => {
@@ -19,8 +19,12 @@ const Login = () => {
     //Custom hook to store logedIn user email to context.
     const userAuth = useAuthentication();
 
-
     const dispatch = useDispatch();
+
+    const userData = useSelector((state) => state.userData);
+    const { loading, error, user } = userData;
+
+    console.log(user);
 
     useEffect(() => {
         const loginUser = async () => {
@@ -38,13 +42,13 @@ const Login = () => {
                 userAuth.login(verifiedData);
                 console.log(verifiedData.userRole === 'admin' ? 'hi' : 'hello'); //sets logedInEmail data in state of global context.
                 setErr(null);
-                if (verifiedData.userRole === 'admin')  {navigate("/admin", {replace:true}); console.log('admin')}
-                else {navigate('/',{replace: true}); console.log('user');}
+                if (verifiedData.userRole === 'admin') { navigate("/admin", { replace: true }); console.log('admin') }
+                else { navigate('/', { replace: true }); console.log('user'); }
             }
         }
         // loginUser();
 
-    }, [formData]);
+    }, []);
 
     return (
         <section>
