@@ -81,17 +81,23 @@ const Sidebar = () => {
               >
                 <Link to="/admin/dashboard">Dashboard</Link>
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 className={isActive === "/admin/profile" && "active"}
                 icon={<i className="bi bi-people"></i>}
               >
                 <Link to="/admin/profile">Profile</Link>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 className={isActive === "/admin/users" && "active"}
                 icon={<i className="bi bi-people"></i>}
               >
                 <Link to="/admin/users">Users</Link>
+              </MenuItem>
+              <MenuItem
+                className={isActive === "/admin/category" && "active"}
+                icon={<i className="bi bi-list-ul"></i>}
+              >
+                <Link to="/admin/category">Category</Link>
               </MenuItem>
               <MenuItem
                 className={isActive === "/admin/products" && "active"}

@@ -13,7 +13,7 @@ const UpdateUser = () => {
   // const handleShow = () => '';
   return (
     <>
-      <h2 className="text-center m-3">{location?.state?.edit ? "Edit User" : "Add User"}</h2>
+      {/* <h2 className="text-center m-3">{location?.state?.edit ? "Edit User" : "Add User"}</h2> */}
       <Container>
         <UserForm
           name={location?.state?.edit ? "Edit User" : "Add User"}

@@ -1,31 +1,11 @@
+import { replace } from 'formik';
 import axiosbash from '../../API/AmazonNodeAPI';
 import {
-  ADD_CATEGORY,
-  ADD_PRODUCT_FAIL,
   ADD_PRODUCT_REQUEST,
-  ADD_PRODUCT_SUCCESS,
-  CLEAR_FILTER,
-  DELETE_CATEGORY,
   DELETE_PRODUCT_FAIL,
   DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
-  GET_CATEGORIES_FAIL,
-  GET_CATEGORIES_REQUEST,
-  GET_CATEGORIES_SUCCESS,
-  GET_PRODUCTS_BY_CATEGORY_FAIL,
-  GET_PRODUCTS_BY_CATEGORY_REQUEST,
-  GET_PRODUCTS_BY_CATEGORY_SUCCESS,
-  GET_PRODUCTS_FAIL,
-  GET_PRODUCTS_REQUEST,
-  GET_PRODUCTS_SUCCESS,
-  GET_PRODUCT_DETAILS_FAIL,
-  GET_PRODUCT_DETAILS_REQUEST,
-  GET_PRODUCT_DETAILS_SUCCESS,
-  SET_FILTER,
-  SET_FILTERED_PRODUCTS,
-  UPDATE_CATEGORY,
   UPDATE_PRODUCT_FAIL,
-  UPDATE_PRODUCT_REQUEST,
   UPDATE_PRODUCT_SUCCESS,
 } from "./ProductTypes";
 
@@ -47,7 +27,7 @@ export const addProduct =
     console.log("formdata   ",formData);
     return async (dispatch) => {
       dispatch({
-        type: 'ADD_PRODUCT_REQUEST',
+        type: ADD_PRODUCT_REQUEST,
       });
 
       try {
@@ -58,13 +38,13 @@ export const addProduct =
         };
 
         const res = await axiosbash.post(`/addproduct`, formData, config);
+        navigate("/admin/products");
 
         console.log(res.data);
         dispatch({
           type: 'ADD_PRODUCT_SUCCESS',
           payload: { category: formData.title.shortTitle, product: res.data },
         });
-        if (navigate) navigate("/products");
       } catch (err) {
         dispatch({
           type: 'ADD_PRODUCT_FAIL',
@@ -75,7 +55,7 @@ export const addProduct =
   }
 
 
-export const updateProduct = (id, formData) => async (dispatch) => {
+export const updateProduct = (id, formData, navigate) => async (dispatch) => {
   console.log("formdata product  ",formData);
   try {
     const config = {
@@ -85,11 +65,13 @@ export const updateProduct = (id, formData) => async (dispatch) => {
     };
 
     const res = await axiosbash.patch(`/updateproduct/${id}`, formData, config);
+    dispatch(getProducts())
+    navigate("/admin/products", replace);
 
     console.log("responce update product ",res.data);
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,
-      payload: { category: formData.category, updatedProduct: res.data },
+      payload: { category: formData.title.shortTitle, updatedProduct: res.data },
     });
   } catch (err) {
     console.log(err);

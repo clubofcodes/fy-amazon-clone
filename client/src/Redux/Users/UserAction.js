@@ -1,3 +1,4 @@
+import { replace } from "formik";
 import axiosbash from "../../API/AmazonNodeAPI";
 import {
   ADD_USER_FAIL,
@@ -30,10 +31,10 @@ export const getUsers = () => async (dispatch) => {
 
   try {
     const res = await axiosbash.get("/getusers");
-
+    const filtUser = res.data.filter((val,index)=>val.activeUser)
     dispatch({
       type: GET_ALL_USERS_SUCCESS,
-      payload: res.data,
+      payload: filtUser,
     });
   } catch (err) {
     dispatch({
@@ -72,15 +73,9 @@ export const getSingleUser = (id) => async (dispatch) => {
 
 //Add User
 export const addUser =
-  ({ formData, navigate, shouldNavigate }) =>
+  ({ formData, navigate}) =>
   async (dispatch) => {
     console.log("adduser ",formData);
-    const data = {
-      email: formData.email,
-      fullname: formData.fullname,
-      password: formData.password,
-      mNumber: formData.mNumber,
-    };
     // const data = {
     //   email: formData.email,
     //   username: formData.username,
@@ -105,35 +100,35 @@ export const addUser =
     //   },
     //   phone: formData.phone,
     // };
-    console.log("userAction insert",data);
-    // dispatch({
-    //   type: ADD_USER_REQUEST,
-    // });
+    // console.log("userAction insert",data);
+    dispatch({
+      type: ADD_USER_REQUEST,
+    });
 
-    // try {
-    //   const config = {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   };
-    //   const res = await axiosbash.post("/users", data, config);
-    //   console.log({ ...data, id: res.data.id });
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const res = await axiosbash.post("/register", formData, config);
+      console.log({ ...formData, id: res.data.id });
 
-    //   dispatch({
-    //     type: ADD_USER_SUCCESS,
-    //     payload: { ...data, id: res.data.id },
-    //   });
+      dispatch({
+        type: ADD_USER_SUCCESS,
+        payload: { ...res.data },
+      });
 
-    //   if (shouldNavigate) navigate("/login");
-    // } catch (err) {
-    //   dispatch({
-    //     type: ADD_USER_FAIL,
-    //     payload: err.response ? err.response.data : err.message,
-    //   });
-    //   setTimeout(() => {
-    //     dispatch(clearError());
-    //   }, 5000);
-    // }
+      navigate("/login");
+    } catch (err) {
+      dispatch({
+        type: ADD_USER_FAIL,
+        payload: err.response ? err.response.data : err.message,
+      });
+      setTimeout(() => {
+        dispatch(clearError());
+      }, 5000);
+    }
   };
 
 // Login User
@@ -154,7 +149,7 @@ export const loginUser = (formData, navigate) => async (dispatch, getState) => {
       },
     };
     const res = await axiosbash.post("/auth/login", data, config);
-    console.log(res.data);
+    console.log("/login   ",res.data);
 
     const users = getState().userList.users;
     const loggedinUser = users.find(
@@ -164,14 +159,15 @@ export const loginUser = (formData, navigate) => async (dispatch, getState) => {
 
     const isAdmin =
       loggedinUser.username.includes("admin")
-    console.log(isAdmin);
+    console.log("/login isadmin ",isAdmin);
 
     loggedinUser.isAdmin = isAdmin;
 
+    console.log();
     if (loggedinUser) {
       dispatch({
         type: LOGIN_USER_SUCCESS,
-        payload: { user: loggedinUser, remember: formData.remember },
+        payload: { user: loggedinUser, },
       });
       if (loggedinUser.isAdmin) {
         navigate("/admin");
@@ -194,16 +190,9 @@ export const loginUser = (formData, navigate) => async (dispatch, getState) => {
 
 // Update User
 export const updateUser =
-  (id, formData ) =>
+  (id, formData=[], navigate ) =>
   async (dispatch) => {
     console.log("formdata update user  ", formData, id);
-    const data = {
-      email: formData.email,
-      fullname: formData.fullname,
-      password: formData.password,
-      phone: formData.mNumber,
-      userRole: formData.userRole
-    };
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
@@ -213,16 +202,15 @@ export const updateUser =
           "Content-Type": "application/json",
         },
       };
-      const res = await axiosbash.patch(`/updateuser/${id}`, data, config);
-
-      const isAdmin =
-        data.userRole.includes("admin")
-
-      data.isAdmin = isAdmin;
-
+      console.log(formData.length);
+      const res = formData.length === 0 ? await axiosbash.patch(`/updateuser/${id}/false`, config)
+      : await axiosbash.patch(`/updateuser/${id}/true`, formData, config);
+      dispatch(getUsers())
+      console.log("responce ", res);
+      navigate('/admin/users',  replace)
       dispatch({
         type: UPDATE_USER_SUCCESS,
-        payload: { ...data, id: res.data.id },
+        payload: { ...formData, id: res.data.id },
       });
     } catch (err) {
       dispatch({
@@ -236,15 +224,14 @@ export const updateUser =
   };
 
 // Delete User
-export const deleteUser = (id) => async (dispatch) => {
-  console.log(id);
+export const deleteUser = (id, navigate) => async (dispatch) => {
   dispatch({
     type: DELETE_USER_REQUEST,
   });
 
   try {
-    await axiosbash.delete(`/users/${id}`);
-
+    await axiosbash.delete(`/users/${id}/false`);
+    navigate('/admin/users');
     dispatch({
       type: DELETE_USER_SUCCESS,
       payload: id,
