@@ -39,7 +39,7 @@ const Navbar = () => {
 
     //For user logout
     const logoutuser = async () => {
-        const logoutResponse = await fetch("http://localhost:3575/api/logout", {
+        const logoutResponse = await fetch("https://amazon-api.vercel.app/api/logout", {
             method: "GET",
             headers: {
                 Accept: "application/json",

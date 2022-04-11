@@ -51,7 +51,7 @@ const ProductView = () => {
         SetCartLoading(true);
         var storeCartProductData;
         //To verify product is already there in cart then increases qty field.
-        const oldData = await fetch(`http://localhost:3575/api/cartdetails`, {
+        const oldData = await fetch(`https://amazon-api.vercel.app/api/cartdetails`, {
             method: "GET", headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -72,7 +72,7 @@ const ProductView = () => {
         });
 
         //Actual code to store product in cart array.
-        const addedToCartResponse = await fetch(`http://localhost:3575/api/addtocart/${id}`, {
+        const addedToCartResponse = await fetch(`https://amazon-api.vercel.app/api/addtocart/${id}`, {
             method: "POST",
             headers: {
                 Accept: "application/json",

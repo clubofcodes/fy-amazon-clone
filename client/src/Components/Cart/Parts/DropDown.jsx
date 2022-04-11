@@ -16,7 +16,7 @@ const DropDown = ({ deleteData, toggle, qty }) => {
     const removeCartItem = async (id) => {
         toggle(true);
         try {
-            const delCartItemResponse = await fetch(`http://localhost:3575/api/removeitem/${id}`, {
+            const delCartItemResponse = await fetch(`https://amazon-api.vercel.app/api/removeitem/${id}`, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
