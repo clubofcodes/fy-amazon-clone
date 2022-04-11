@@ -73,7 +73,7 @@ export const userReducer = (
       }
       return {
         ...state,
-        users: state.users.map((user) =>
+        user: state.users.map((user) =>
           user.id === action.payload.id ? action.payload : user
         ),
         authUser:

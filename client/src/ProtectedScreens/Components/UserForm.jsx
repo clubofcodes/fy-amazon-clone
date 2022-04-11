@@ -6,8 +6,9 @@ import { useAuthentication } from '../../Utils/Context/useAuthentication';
 import { Formik } from 'formik';
 import "../../Screens/Common.css";
 import { addUser, updateUser } from "../../Redux/Users/UserAction";
+import { Button } from "react-bootstrap";
 
-const UserForm = () => {
+const UserForm = (props) => {
   //new state to store user form data.
   const [formData, setFormData] = useState({});
   //new state to store error getting from server.
@@ -51,15 +52,15 @@ const UserForm = () => {
       (sentData?.error) ? setErr({ status: addUserResponse.status, err: sentData.error }) : navigate("/", { replace: true });
       !(sentData?.error) && setFormData({});
     }
-    registerUser();
+    // registerUser();
 
   }, [formData]);
 
   return (
-    <div className="card col-md-4 offset-4">
+    <div className="card col-md-4 offset-4 mt-3">
       <div className="card-body sign_form pt-2">
         <Formik
-          initialValues={{ fullname: edit ? user.fullname :'', mNumber: edit ? user.mNumber :'', email: edit ? user.email :'', password: edit ? user.password :'', userRole: edit ? user.userRole :'customer' }}
+          initialValues={{ fullname: edit ? user.fullname : '', mNumber: edit ? user.mNumber : '', email: edit ? user.email : '', password: edit ? user.password : '', userRole: edit ? user.userRole : 'customer' }}
           validate={values => {
             const errors = {};
 
@@ -80,17 +81,14 @@ const UserForm = () => {
           }}
           onSubmit={(values, { setSubmitting }) => {
             // setFormData({ ...formData, ...values });
-            console.log("userForm id ",values, user?._id);
-            dispatch(updateUser(user?._id, values));
-            setTimeout(() => {
-              // alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+            console.log("userForm id ", values, user?._id);
+            edit ? dispatch(updateUser(user?._id, values, navigate))
+              : dispatch(addUser(values, navigate))
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
             <form onSubmit={handleSubmit} method="POST">
-              {<h1>Create Account</h1>}
+              {<h1>{props?.name}</h1>}
               <div className="form_data">
                 <label htmlFor="fullname">Your Name</label>
                 <input type="text" name="fullname" onChange={handleChange} value={values.fullname} />
@@ -111,7 +109,7 @@ const UserForm = () => {
 
               <div className="form_data">
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password" onChange={handleChange} value={values.password}  />
+                <input type="password" name="password" onChange={handleChange} value={values.password} />
               </div>
               {(!values.password || errors.password) && <div className={errors.password ? "form_err" : "form_err text-dark"}><img className="mx-1" src={errors.password ? "./Assets/img/err_icon.png" : "./Assets/img/info_icon.png"} alt="Error icon" width="7" />{errors.password ? errors.password : "Passwords must be at least 6 characters."}</div>}
 
@@ -119,13 +117,21 @@ const UserForm = () => {
                 <p>We will send you a text to verify your phone.<br />Message and Data rates may apply.</p>
               </div>
 
-              <button type="submit" className="signin_btn mt-1" disabled={isSubmitting}>Continue</button>
-
-              <div className="shadow_divider"></div>
-              <div className="signin_info mb-0">
-                <p className="mb-0">Already have an account?</p>
-                <NavLink to="/signin">Sign in<img className="mx-1" src="./Assets/img/right_arrow.png" alt="Error icon" width="4" /></NavLink>
-              </div>
+              {!edit ?
+                <>
+                <button type="submit" className="signin_btn mt-1" disabled={isSubmitting}>Continue</button>
+                  <div className="shadow_divider"></div>
+                  <div className="signin_info mb-0">
+                    <p className="mb-0">Already have an account?</p>
+                    <NavLink to="/signin">Sign in<img className="mx-1" src="./Assets/img/right_arrow.png" alt="Error icon" width="4" /></NavLink>
+                  </div>
+                </>
+                :
+                <>
+                <Button variant="outline-success" onClick={()=> navigate('/admin/address')}>Add Address</Button>{' '}
+                <button type="submit" className="signin_btn mt-1" disabled={isSubmitting}>Continue</button>
+                </>
+              }
             </form>
           )}
         </Formik>

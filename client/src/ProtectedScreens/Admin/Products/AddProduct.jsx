@@ -14,16 +14,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productSchema } from "../../../Validations/yupSchema";
 import { addProduct, updateProduct } from "../../../Redux/Products/Action";
+import { getCategories } from "../../../Redux/Category/CategoryAction";
 
 const AddProduct = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [image, setImage] = useState(location?.state?.product?.url);
 
+  const categoryList = useSelector((state) => state.categoryData);
+  const { categories } = categoryList;
+
   // console.log(location?.state?.product);
 
   useEffect(() => {
     console.log("location ", location.state);
+    dispatch(getCategories())
     // reset();
     // eslint-disable-next-line
   }, []);
@@ -59,7 +64,7 @@ const AddProduct = () => {
     if (location?.state?.edit) {
       dispatch(updateProduct(location.state.data._id, data, navigate));
     } else {
-      dispatch(addProduct(data));
+      dispatch(addProduct(data, navigate));
     }
     // reset();
   };
@@ -107,17 +112,20 @@ const AddProduct = () => {
             </Col>
              {/* Category field */}
              <Col md={6}>
-              <FloatingLabel label="Category">
-                <Form.Control
-                  {...register("title.shortTitle")}
-                  type="text"
-                  placeholder="Category"
-                />
-              </FloatingLabel>
-              <span className="text-danger">
-                {errors.title?.shortTitle && errors.title?.shortTitle.message}
-              </span>
-            </Col>
+                  <FloatingLabel label="Category">
+                    <Form.Select {...register("title.shortTitle")}>
+                      {categories.map((category, index) => (
+                        <option value={category} key={index}>
+                          {category.toUpperCase()}
+                          {/* {category.slice(1)} */}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </FloatingLabel>
+                  <span className="text-danger">
+                    {errors.category && errors.category.message}
+                  </span>
+                </Col>
           </Row>
 
           <Row className="mt-2 gx-3">

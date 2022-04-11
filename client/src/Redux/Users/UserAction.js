@@ -1,3 +1,4 @@
+import { replace } from "formik";
 import axiosbash from "../../API/AmazonNodeAPI";
 import {
   ADD_USER_FAIL,
@@ -30,10 +31,10 @@ export const getUsers = () => async (dispatch) => {
 
   try {
     const res = await axiosbash.get("/getusers");
-
+    const filtUser = res.data.filter((val, index) => val.activeUser)
     dispatch({
       type: GET_ALL_USERS_SUCCESS,
-      payload: res.data,
+      payload: filtUser,
     });
   } catch (err) {
     dispatch({
@@ -71,70 +72,62 @@ export const getSingleUser = (id) => async (dispatch) => {
 };
 
 //Add User
-export const addUser =
-  ({ formData, navigate, shouldNavigate }) =>
-    async (dispatch) => {
-      console.log("adduser ", formData);
-      const data = {
-        email: formData.email,
-        fullname: formData.fullname,
-        password: formData.password,
-        mNumber: formData.mNumber,
-      };
-      // const data = {
-      //   email: formData.email,
-      //   username: formData.username,
-      //   password: formData.password,
-      //   name: {
-      //     firstname: formData.firstname,
-      //     lastname: formData.lastname,
-      //   },
-      //   address: {
-      //     city: formData.city,
-      //     street: formData.street,
-      //     number: formData.number,
-      //     zipcode: formData.zipcode,
-      //     geolocation: {
-      //       lat: formData.geolocation.coordinates
-      //         ? formData.geolocation.coordinates.lat
-      //         : "22.2323345344",
-      //       long: formData.geolocation.coordinates
-      //         ? formData.geolocation.coordinates.lng
-      //         : "22.435355345",
-      //     },
-      //   },
-      //   phone: formData.phone,
-      // };
-      console.log("userAction insert", data);
-      // dispatch({
-      //   type: ADD_USER_REQUEST,
-      // });
+export const addUser = ({ formData, navigate }) => async (dispatch) => {
+  console.log("adduser ", formData);
+  // const data = {
+  //   email: formData.email,
+  //   username: formData.username,
+  //   password: formData.password,
+  //   name: {
+  //     firstname: formData.firstname,
+  //     lastname: formData.lastname,
+  //   },
+  //   address: {
+  //     city: formData.city,
+  //     street: formData.street,
+  //     number: formData.number,
+  //     zipcode: formData.zipcode,
+  //     geolocation: {
+  //       lat: formData.geolocation.coordinates
+  //         ? formData.geolocation.coordinates.lat
+  //         : "22.2323345344",
+  //       long: formData.geolocation.coordinates
+  //         ? formData.geolocation.coordinates.lng
+  //         : "22.435355345",
+  //     },
+  //   },
+  //   phone: formData.phone,
+  // };
+  // console.log("userAction insert",data);
+  dispatch({
+    type: ADD_USER_REQUEST,
+  });
 
-      // try {
-      //   const config = {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   };
-      //   const res = await axiosbash.post("/users", data, config);
-      //   console.log({ ...data, id: res.data.id });
-
-      //   dispatch({
-      //     type: ADD_USER_SUCCESS,
-      //     payload: { ...data, id: res.data.id },
-      //   });
-
-      //   if (shouldNavigate) navigate("/login");
-      // } catch (err) {
-      //   dispatch({
-      //     type: ADD_USER_FAIL,
-      //     payload: err.response ? err.response.data : err.message,
-      //   });
-      //   setTimeout(() => {
-      //     dispatch(clearError());
-      //   }, 5000);
-      // }
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
+    const res = await axiosbash.post("/register", formData, config);
+    console.log({ ...formData, id: res.data.id });
+
+    dispatch({
+      type: ADD_USER_SUCCESS,
+      payload: { ...res.data },
+    });
+
+    navigate("/login");
+  } catch (err) {
+    dispatch({
+      type: ADD_USER_FAIL,
+      payload: err.response ? err.response.data : err.message,
+    });
+    setTimeout(() => {
+      dispatch(clearError());
+    }, 5000);
+  }
+};
 
 // Login User
 export const loginUser = (formData, navigate = null) => async (dispatch) => {
@@ -154,11 +147,22 @@ export const loginUser = (formData, navigate = null) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
+<<<<<<< HEAD
+=======
+    const res = await axiosbash.post("/auth/login", data, config);
+    console.log("/login   ",res.data);
+>>>>>>> disha
 
     const logedInUserRes = await axiosbash.patch("/login", data, config);
     console.log(logedInUserRes);
 
+<<<<<<< HEAD
     const isAdmin = logedInUserRes?.data.userRole.toLowerCase().includes("admin");
+=======
+    const isAdmin =
+      loggedinUser.username.includes("admin")
+    console.log("/login isadmin ",isAdmin);
+>>>>>>> disha
 
     dispatch({
       type: LOGIN_USER_SUCCESS,
@@ -169,6 +173,23 @@ export const loginUser = (formData, navigate = null) => async (dispatch) => {
 
     // dispatch(getValidateUser());
 
+<<<<<<< HEAD
+=======
+    console.log();
+    if (loggedinUser) {
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: { user: loggedinUser, },
+      });
+      if (loggedinUser.isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    } else {
+      throw new Error("User not found");
+    }
+>>>>>>> disha
   } catch (err) {
     dispatch({
       type: LOGIN_USER_FAIL,
@@ -218,61 +239,50 @@ export const getValidateUser = () => async (dispatch) => {
     }, 5000);
   }
   // (validUserResponse.status !== 200) ? console.log("First login") : setUserData(validUserData);
-}
+};
 
 // Update User
-export const updateUser =
-  (id, formData) =>
-    async (dispatch) => {
-      console.log("formdata update user  ", formData, id);
-      const data = {
-        email: formData.email,
-        fullname: formData.fullname,
-        password: formData.password,
-        phone: formData.mNumber,
-        userRole: formData.userRole
-      };
-      dispatch({
-        type: UPDATE_USER_REQUEST,
-      });
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        const res = await axiosbash.patch(`/updateuser/${id}`, data, config);
-
-        const isAdmin =
-          data.userRole.includes("admin")
-
-        data.isAdmin = isAdmin;
-
-        dispatch({
-          type: UPDATE_USER_SUCCESS,
-          payload: { ...data, id: res.data.id },
-        });
-      } catch (err) {
-        dispatch({
-          type: UPDATE_USER_FAIL,
-          payload: err.response ? err.response.data : err.message,
-        });
-        setTimeout(() => {
-          dispatch(clearError());
-        }, 5000);
-      }
+export const updateUser = (id, formData = [], navigate) => async (dispatch) => {
+  console.log("formdata update user  ", formData, id);
+  dispatch({
+    type: UPDATE_USER_REQUEST,
+  });
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
+    console.log(formData.length);
+    const res = formData.length === 0 ? await axiosbash.patch(`/updateuser/${id}/false`, config)
+      : await axiosbash.patch(`/updateuser/${id}/true`, formData, config);
+    dispatch(getUsers())
+    console.log("responce ", res);
+    navigate('/admin/users', replace)
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: { ...formData, id: res.data.id },
+    });
+  } catch (err) {
+    dispatch({
+      type: UPDATE_USER_FAIL,
+      payload: err.response ? err.response.data : err.message,
+    });
+    setTimeout(() => {
+      dispatch(clearError());
+    }, 5000);
+  }
+};
 
 // Delete User
-export const deleteUser = (id) => async (dispatch) => {
-  console.log(id);
+export const deleteUser = (id, navigate) => async (dispatch) => {
   dispatch({
     type: DELETE_USER_REQUEST,
   });
 
   try {
-    await axiosbash.delete(`/users/${id}`);
-
+    await axiosbash.delete(`/users/${id}/false`);
+    navigate('/admin/users');
     dispatch({
       type: DELETE_USER_SUCCESS,
       payload: id,

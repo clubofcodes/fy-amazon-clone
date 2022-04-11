@@ -25,6 +25,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUsers, getValidateUser } from "./Redux/Users/UserAction";
 import { getProducts } from "./Redux/Products/Action";
+import CategoryList from "./ProtectedScreens/Admin/Categories/CategoryList";
+import AddCategory from "./ProtectedScreens/Admin/Categories/AddCategory";
 
 
 function App() {
@@ -62,12 +64,15 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
           <Route path="/admin" element={<Sidebar />} >
             <Route index element={<AdminDashboard />} />
-            <Route index path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route index path="/admin/profile" element={<AdminProfile />} />
-            <Route index path="/admin/users" element={<UserList />} />
-            <Route index path="/admin/products" element={<ProductList />} />
-            <Route index path="/admin/addproduct" element={<AddProduct />} />
-            <Route index path="/admin/edituser" element={<UpdateUser />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="profile" element={<AdminProfile />} />
+            <Route path="products" element={<ProductList />} />
+            <Route path="users" element={<UserList />} />
+            <Route path="addproduct" element={<AddProduct />} />
+            <Route path="edituser" element={<UpdateUser />} />
+            <Route path="category" element={<CategoryList />} />
+            <Route path="addcategory" element={<AddCategory />} />
+
           </Route>
         </Routes>
       </AuthProvider>

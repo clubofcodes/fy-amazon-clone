@@ -56,9 +56,7 @@ export const loginSchema = yup
 export const productSchema = yup
   .object().shape({
     title: yup.object().shape({
-      shortTitle: yup.string()
-        .required("Category is required!")
-        .matches(/^.{5,}$/, "Product Category is too short."),
+      shortTitle: yup.string().required('Product Category is required!'),
       longTitle: yup
         .string()
         .required("Title is required!")
@@ -85,7 +83,7 @@ export const productSchema = yup
     description: yup
       .string()
       .required('Description is required!')
-      .matches(/^.{20,}$/, "Product Description is too short."),
+      .min(5, "Product Description is too short."),
       url: yup
       .string()
       .required('Image is required!')

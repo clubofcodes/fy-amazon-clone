@@ -6,10 +6,11 @@ import Loading from "../../../Components/Loading";
 import Message from "../../../Components/Message";
 import Pagination from "../Components/Pagination";
 import Adduser from "./UpdateUser";
+import { deleteUser, getUsers, updateUser } from "../../../Redux/Users/UserAction";
 
 const UserList = () => {
   const userData = useSelector((state) => state.userData);
-  const { users, loading, error } = userData;
+  const { users } = userData;
   const [filterData, setFilterData] = useState([]);
 
   const navigate = useNavigate();
@@ -18,12 +19,13 @@ const UserList = () => {
 
   useEffect(() => {
     outlet.selectCurTab('/admin/users');
-    // eslint-disable-next-line
+    dispatch(getUsers())
   }, []);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure? This is an IRREVERSIBLE action!")) {
-      // dispatch(deleteUser(id));
+      const data = {activeUser:false}
+      dispatch(updateUser(id,'', navigate));
     }
   };
 
@@ -74,7 +76,7 @@ const UserList = () => {
                     <i className="bi bi-pencil-square fs-5" onClick={()=>navigate('/admin/edituser',{state:{edit:true, data:user}})}></i>
                       <i
                         className="bi bi-trash text-danger fs-5"
-                        onClick={() => deleteHandler(user.id)}
+                        onClick={() => deleteHandler(user._id)}
                       ></i>
                     </div>
                   </td>
